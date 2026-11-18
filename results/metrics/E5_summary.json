@@ -1,0 +1,116 @@
+{
+  "window_a": "2005-09",
+  "window_b": "2015-19",
+  "n": 196,
+  "spearman": 0.9856,
+  "gainers": [
+    {
+      "country": "China",
+      "d_rank": 32.0,
+      "d_index": 1.62
+    },
+    {
+      "country": "Georgia",
+      "d_rank": 26.0,
+      "d_index": 1.31
+    },
+    {
+      "country": "Costa Rica",
+      "d_rank": 24.0,
+      "d_index": 1.24
+    },
+    {
+      "country": "Qatar",
+      "d_rank": 22.0,
+      "d_index": 0.67
+    },
+    {
+      "country": "Peru",
+      "d_rank": 20.0,
+      "d_index": 1.03
+    },
+    {
+      "country": "Azerbaijan",
+      "d_rank": 19.0,
+      "d_index": 1.08
+    },
+    {
+      "country": "Turkiye",
+      "d_rank": 17.0,
+      "d_index": 0.95
+    },
+    {
+      "country": "Bhutan",
+      "d_rank": 16.0,
+      "d_index": 1.9
+    },
+    {
+      "country": "Belarus",
+      "d_rank": 16.0,
+      "d_index": 0.87
+    }
+  ],
+  "losers": [
+    {
+      "country": "Venezuela, RB",
+      "d_rank": -34.0,
+      "d_index": -1.39
+    },
+    {
+      "country": "Aruba",
+      "d_rank": -24.0,
+      "d_index": -1.44
+    },
+    {
+      "country": "Jamaica",
+      "d_rank": -23.0,
+      "d_index": -0.85
+    },
+    {
+      "country": "Syrian Arab Republic",
+      "d_rank": -22.0,
+      "d_index": -1.58
+    },
+    {
+      "country": "Libya",
+      "d_rank": -21.0,
+      "d_index": -0.87
+    },
+    {
+      "country": "Dominica",
+      "d_rank": -21.0,
+      "d_index": -0.86
+    },
+    {
+      "country": "Jordan",
+      "d_rank": -19.0,
+      "d_index": -0.78
+    },
+    {
+      "country": "Yemen, Rep.",
+      "d_rank": -19.0,
+      "d_index": -1.13
+    },
+    {
+      "country": "Eritrea",
+      "d_rank": -18.0,
+      "d_index": -1.48
+    }
+  ],
+  "share_move_gt10": 0.2551,
+  "share_move_gt20": 0.051,
+  "archetype_slopes": {
+    "Advanced": {
+      "a": 4.055,
+      "b": 3.842
+    },
+    "Mature middle": {
+      "a": 0.112,
+      "b": 0.251
+    },
+    "Emerging frontier": {
+      "a": -4.685,
+      "b": -4.564
+    }
+  }
+}

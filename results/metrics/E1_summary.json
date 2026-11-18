@@ -1,0 +1,136 @@
+{
+  "n_countries": 198,
+  "n_indicators": 28,
+  "evr_6": [
+    0.479,
+    0.0866,
+    0.0623,
+    0.0565,
+    0.0492,
+    0.038
+  ],
+  "pc1_share": 0.479,
+  "pc1_pc2_share": 0.5657,
+  "eigenvalues": [
+    13.4814,
+    2.4385,
+    1.7532,
+    1.5902,
+    1.3843,
+    1.0695
+  ],
+  "pc1_share_ci": [
+    0.4437,
+    0.5162
+  ],
+  "pc1_share_boot_sd": 0.0191,
+  "bootstrap_spearman_median": 0.9993,
+  "bootstrap_spearman_min": 0.9974,
+  "window_pc1_share": {
+    "2005-09": 0.4757,
+    "2010-14": 0.4743,
+    "2015-19": 0.4603,
+    "2015-22": 0.4597,
+    "2005-22": 0.479
+  },
+  "window_spearman_min": 0.9826,
+  "window_spearman_median": 0.9935,
+  "window_spearman_matrix": {
+    "windows": [
+      "2005-09",
+      "2010-14",
+      "2015-19",
+      "2015-22",
+      "2005-22"
+    ],
+    "values": [
+      [
+        1.0,
+        0.9937,
+        0.9856,
+        0.9826,
+        0.9934
+      ],
+      [
+        0.9937,
+        1.0,
+        0.9925,
+        0.9901,
+        0.9972
+      ],
+      [
+        0.9856,
+        0.9925,
+        1.0,
+        0.999,
+        0.996
+      ],
+      [
+        0.9826,
+        0.9901,
+        0.999,
+        1.0,
+        0.9945
+      ],
+      [
+        0.9934,
+        0.9972,
+        0.996,
+        0.9945,
+        1.0
+      ]
+    ]
+  },
+  "loio_spearman_min": 0.9986,
+  "loio_spearman_median": 0.9993,
+  "loio_worst_indicator": "Urbanisation",
+  "index_range": [
+    -7.678,
+    5.918
+  ],
+  "top5": [
+    [
+      "Netherlands",
+      5.918
+    ],
+    [
+      "Luxembourg",
+      5.75
+    ],
+    [
+      "Singapore",
+      5.684
+    ],
+    [
+      "Belgium",
+      5.681
+    ],
+    [
+      "United Arab Emirates",
+      5.675
+    ]
+  ],
+  "bottom5": [
+    [
+      "Niger",
+      -6.887
+    ],
+    [
+      "Congo, Dem. Rep.",
+      -7.027
+    ],
+    [
+      "Chad",
+      -7.384
+    ],
+    [
+      "Somalia, Fed. Rep.",
+      -7.564
+    ],
+    [
+      "Central African Republic",
+      -7.678
+    ]
+  ],
+  "spearman_index_gdp": 0.95
+}

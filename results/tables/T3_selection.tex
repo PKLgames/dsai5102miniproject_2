@@ -1,0 +1,41 @@
+\begin{table}[t]
+\centering
+\caption{Indicator selection under the two criteria ($n=198$).}
+\label{tab:selection}
+\small
+\begin{tabular}{llccrr}
+\toprule
+\textbf{indicator} & \textbf{domain} & \textbf{sparse_pca} & \textbf{forward} & \textbf{boot_freq} & \textbf{sup_freq} & \textbf{pc1_loading} \\
+\midrule
+Internet users & Digital & yes & yes & 1.000 & 0.600 & 0.600 \\
+Under-5 mortality & Human development & yes &  & 1.000 & 0.200 & -0.438 \\
+Secondary enrolment & Human development & yes &  & 1.000 & 0.200 & 0.268 \\
+Renewable energy share & Urban & energy & yes &  & 0.985 & 0.600 & -0.166 \\
+GNI per capita PPP & Economy & yes &  & 0.985 & 0.400 & 0.486 \\
+Electricity access & Urban & energy & yes &  & 0.910 & 0.400 & 0.151 \\
+Life expectancy & Human development & yes &  & 0.890 & 0.600 & 0.175 \\
+GDP per capita & Economy & yes & yes & 0.825 & 1.000 & 0.191 \\
+Energy use per capita & Urban & energy & yes & yes & 0.790 & 0.200 & 0.100 \\
+Tertiary enrolment & Human development & yes &  & 0.770 & 0.400 & 0.056 \\
+Maternal mortality & Human development & yes &  & 0.750 & 0.200 & -0.089 \\
+Undernourishment & Agriculture & food & yes &  & 0.700 & 0.400 & -0.050 \\
+Mobile subscriptions & Digital &  & yes & 0.195 & 0.800 & 0.000 \\
+Urbanisation & Urban & energy &  &  & 0.190 & 0.400 & 0.000 \\
+Measles immunisation & Human development &  & yes & 0.170 & 0.200 & 0.000 \\
+CO2 emissions per capita & Environment &  & yes & 0.095 & 0.800 & 0.000 \\
+Fixed broadband & Digital &  & yes & 0.040 & 0.200 & 0.000 \\
+Trade openness & Economy &  & yes & 0.025 & 0.400 & 0.000 \\
+Cereal yield & Agriculture & food &  &  & 0.025 & 0.200 & 0.000 \\
+FDI inflow & Economy &  &  & 0.020 & 0.000 & 0.000 \\
+GDP growth & Economy &  & yes & 0.000 & 0.800 & -0.000 \\
+Unemployment & Economy &  &  & 0.000 & 0.600 & 0.000 \\
+Forest cover & Environment &  &  & 0.000 & 0.600 & -0.000 \\
+Health spending & Human development &  & yes & 0.000 & 0.400 & 0.000 \\
+Renewable electricity & Urban & energy &  & yes & 0.000 & 0.400 & -0.000 \\
+PM2.5 exposure & Environment &  & yes & 0.000 & 0.400 & -0.000 \\
+Water withdrawal & Environment &  &  & 0.000 & 0.400 & 0.000 \\
+Agricultural land & Environment &  &  & 0.000 & 0.200 & -0.000 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\parbox{0.92\linewidth}{\footnotesize \texttt{boot\_freq}: share of 200 country-bootstrap resamples in which the indicator keeps a non-zero PC1 loading at $\alpha^*$. \texttt{sup\_freq}: share of the 5 nested outer folds in which the indicator is chosen among the first 12 by forward selection.}
+\end{table}

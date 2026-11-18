@@ -1,0 +1,20 @@
+{
+  "fidelity": {
+    "sparse": {
+      "name": "label-blind 12",
+      "k": 12,
+      "spearman": 0.9935
+    },
+    "top12": {
+      "name": "label-aware 12",
+      "k": 12,
+      "spearman": 0.9795
+    },
+    "top3": {
+      "name": "label-aware 3",
+      "k": 3,
+      "spearman": 0.917
+    }
+  },
+  "spearman_sparse_vs_top12": 0.9632
+}

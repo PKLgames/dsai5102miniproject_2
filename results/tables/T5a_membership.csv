@@ -1,0 +1,199 @@
+iso3,cluster,income,index,country,region
+ABW,0,High,2.608071345947432,Aruba,Latin America & Caribbean
+AFG,2,Low,-4.870361648233706,Afghanistan,"Middle East, North Africa, Afghanistan & Pakistan"
+AGO,2,Lower middle,-4.8046246024769115,Angola,Sub-Saharan Africa
+ALB,1,Upper middle,1.0252171548660138,Albania,Europe & Central Asia
+AND,0,High,4.017125963926157,Andorra,Europe & Central Asia
+ARE,0,High,5.674690439947612,United Arab Emirates,"Middle East, North Africa, Afghanistan & Pakistan"
+ARG,0,Upper middle,2.6864731149707386,Argentina,Latin America & Caribbean
+ARM,1,Upper middle,0.8441193904548333,Armenia,Europe & Central Asia
+ATG,0,High,2.183515012189152,Antigua and Barbuda,Latin America & Caribbean
+AUS,0,High,5.37716871248516,Australia,East Asia & Pacific
+AUT,0,High,4.417714154990933,Austria,Europe & Central Asia
+AZE,1,Upper middle,0.521202813937338,Azerbaijan,Europe & Central Asia
+BDI,2,Low,-6.5910666620035725,Burundi,Sub-Saharan Africa
+BEL,0,High,5.680830572680849,Belgium,Europe & Central Asia
+BEN,2,Lower middle,-4.869815559095533,Benin,Sub-Saharan Africa
+BFA,2,Low,-5.767403752043916,Burkina Faso,Sub-Saharan Africa
+BGD,2,Lower middle,-3.3373851055542496,Bangladesh,South Asia
+BGR,0,High,2.799767371826788,Bulgaria,Europe & Central Asia
+BHR,0,High,4.654791932608909,Bahrain,"Middle East, North Africa, Afghanistan & Pakistan"
+BHS,0,High,2.6534948281824344,"Bahamas, The",Latin America & Caribbean
+BIH,1,Upper middle,1.432741281114534,Bosnia and Herzegovina,Europe & Central Asia
+BLR,0,Upper middle,3.1514883454888163,Belarus,Europe & Central Asia
+BLZ,1,Upper middle,-0.4865922014170339,Belize,Latin America & Caribbean
+BMU,0,High,5.076157049898753,Bermuda,North America
+BOL,1,Lower middle,-1.404947345159063,Bolivia,Latin America & Caribbean
+BRA,1,Upper middle,1.3012860582151424,Brazil,Latin America & Caribbean
+BRB,0,High,2.869345924505169,Barbados,Latin America & Caribbean
+BRN,0,High,3.152670801362569,Brunei Darussalam,East Asia & Pacific
+BTN,2,Lower middle,-2.409931976839822,Bhutan,South Asia
+BWA,1,Upper middle,-1.5527120660282836,Botswana,Sub-Saharan Africa
+CAF,2,Low,-7.677754730262416,Central African Republic,Sub-Saharan Africa
+CAN,0,High,4.629839286749003,Canada,North America
+CHE,0,High,4.843726048562546,Switzerland,Europe & Central Asia
+CHL,0,High,2.885600954233754,Chile,Latin America & Caribbean
+CHN,1,Upper middle,1.0465669927167758,China,East Asia & Pacific
+CIV,2,Lower middle,-4.329786499522633,Cote d'Ivoire,Sub-Saharan Africa
+CMR,2,Lower middle,-4.514042296182979,Cameroon,Sub-Saharan Africa
+COD,2,Low,-7.026755023971697,"Congo, Dem. Rep.",Sub-Saharan Africa
+COG,2,Lower middle,-4.324276024287696,"Congo, Rep.",Sub-Saharan Africa
+COL,1,Upper middle,0.6901828093198035,Colombia,Latin America & Caribbean
+COM,2,Lower middle,-4.238493584535419,Comoros,Sub-Saharan Africa
+CPV,1,Upper middle,-1.0349330578094953,Cabo Verde,Sub-Saharan Africa
+CRI,1,High,1.598788406809898,Costa Rica,Latin America & Caribbean
+CUB,1,Upper middle,1.0579242428960776,Cuba,Latin America & Caribbean
+CYP,0,High,3.862319317714153,Cyprus,Europe & Central Asia
+CZE,0,High,4.28205494472874,Czechia,Europe & Central Asia
+DEU,0,High,5.0151361415489895,Germany,Europe & Central Asia
+DJI,2,Lower middle,-3.217533033083363,Djibouti,"Middle East, North Africa, Afghanistan & Pakistan"
+DMA,1,Upper middle,1.2050676628866237,Dominica,Latin America & Caribbean
+DNK,0,High,5.203460615625807,Denmark,Europe & Central Asia
+DOM,1,Upper middle,0.07025182265998428,Dominican Republic,Latin America & Caribbean
+DZA,1,Upper middle,0.564811355862592,Algeria,"Middle East, North Africa, Afghanistan & Pakistan"
+ECU,1,Upper middle,0.19665594945898782,Ecuador,Latin America & Caribbean
+EGY,1,Lower middle,0.02567033932979734,"Egypt, Arab Rep.","Middle East, North Africa, Afghanistan & Pakistan"
+ERI,2,Low,-5.150952732080476,Eritrea,Sub-Saharan Africa
+ESP,0,High,4.507370769278271,Spain,Europe & Central Asia
+EST,0,High,4.396264445806491,Estonia,Europe & Central Asia
+ETH,2,Low,-6.5032571749616075,Ethiopia,Sub-Saharan Africa
+FIN,0,High,5.266052969966641,Finland,Europe & Central Asia
+FJI,1,Upper middle,0.1348410003959158,Fiji,East Asia & Pacific
+FRA,0,High,4.451472385702712,France,Europe & Central Asia
+FSM,1,Upper middle,-1.6262308172729147,"Micronesia, Fed. Sts.",East Asia & Pacific
+GAB,1,Upper middle,-1.5315275844271894,Gabon,Sub-Saharan Africa
+GBR,0,High,4.531357476071694,United Kingdom,Europe & Central Asia
+GEO,1,Upper middle,0.8091326384818778,Georgia,Europe & Central Asia
+GHA,2,Lower middle,-3.0826923069158143,Ghana,Sub-Saharan Africa
+GIN,2,Lower middle,-5.836905341480832,Guinea,Sub-Saharan Africa
+GMB,2,Low,-4.303878532690196,"Gambia, The",Sub-Saharan Africa
+GNB,2,Low,-5.888866234554772,Guinea-Bissau,Sub-Saharan Africa
+GNQ,2,Upper middle,-3.0235293351793904,Equatorial Guinea,Sub-Saharan Africa
+GRC,0,High,4.212682223252234,Greece,Europe & Central Asia
+GRD,1,Upper middle,1.134938714961629,Grenada,Latin America & Caribbean
+GTM,1,Upper middle,-1.9240841781870657,Guatemala,Latin America & Caribbean
+GUY,1,High,-0.5470829086640469,Guyana,Latin America & Caribbean
+HKG,0,High,5.18700315344359,"Hong Kong SAR, China",East Asia & Pacific
+HND,1,Lower middle,-1.7342642633025702,Honduras,Latin America & Caribbean
+HRV,0,High,2.9085087054965912,Croatia,Europe & Central Asia
+HTI,2,Lower middle,-5.26687454044284,Haiti,Latin America & Caribbean
+HUN,0,High,3.6124760674691387,Hungary,Europe & Central Asia
+IDN,1,Upper middle,-1.1305782239940736,Indonesia,East Asia & Pacific
+IND,2,Lower middle,-2.8194117095688793,India,South Asia
+IRL,0,High,4.754995529174901,Ireland,Europe & Central Asia
+IRN,1,Upper middle,1.2415943774532776,"Iran, Islamic Rep.","Middle East, North Africa, Afghanistan & Pakistan"
+IRQ,1,Upper middle,-1.175486031283357,Iraq,"Middle East, North Africa, Afghanistan & Pakistan"
+ISL,0,High,5.016368292844674,Iceland,Europe & Central Asia
+ISR,0,High,4.305859420151011,Israel,"Middle East, North Africa, Afghanistan & Pakistan"
+ITA,0,High,3.9760065197460803,Italy,Europe & Central Asia
+JAM,1,Upper middle,0.08102858064575544,Jamaica,Latin America & Caribbean
+JOR,1,Upper middle,0.8100612215269697,Jordan,"Middle East, North Africa, Afghanistan & Pakistan"
+JPN,0,High,4.979749786835577,Japan,East Asia & Pacific
+KAZ,1,Upper middle,1.6204928922438289,Kazakhstan,Europe & Central Asia
+KEN,2,Lower middle,-4.2174777767946185,Kenya,Sub-Saharan Africa
+KGZ,1,Lower middle,-0.8111099302210579,Kyrgyz Republic,Europe & Central Asia
+KHM,2,Lower middle,-3.016838622913787,Cambodia,East Asia & Pacific
+KIR,1,Lower middle,-2.1259172653343446,Kiribati,East Asia & Pacific
+KNA,0,High,2.6874988531839894,St. Kitts and Nevis,Latin America & Caribbean
+KOR,0,High,5.075503468063485,"Korea, Rep.",East Asia & Pacific
+KWT,0,High,4.643679767975004,Kuwait,"Middle East, North Africa, Afghanistan & Pakistan"
+LAO,2,Lower middle,-3.42397839195951,Lao PDR,East Asia & Pacific
+LBN,1,Lower middle,1.1276964349650347,Lebanon,"Middle East, North Africa, Afghanistan & Pakistan"
+LBR,2,Low,-5.927017352404299,Liberia,Sub-Saharan Africa
+LBY,1,Upper middle,1.345858632275794,Libya,"Middle East, North Africa, Afghanistan & Pakistan"
+LCA,1,Upper middle,0.7861273757538827,St. Lucia,Latin America & Caribbean
+LKA,1,Upper middle,-0.8326619429346562,Sri Lanka,South Asia
+LSO,2,Lower middle,-5.111248691865734,Lesotho,Sub-Saharan Africa
+LTU,0,High,3.3337425672872034,Lithuania,Europe & Central Asia
+LUX,0,High,5.749948262634189,Luxembourg,Europe & Central Asia
+LVA,0,High,2.781789834740091,Latvia,Europe & Central Asia
+MAR,1,Lower middle,-0.41305106049894874,Morocco,"Middle East, North Africa, Afghanistan & Pakistan"
+MDA,1,Upper middle,0.701535035598475,Moldova,Europe & Central Asia
+MDG,2,Low,-6.109686627468771,Madagascar,Sub-Saharan Africa
+MDV,1,Upper middle,1.2583935333800305,Maldives,South Asia
+MEX,1,Upper middle,1.3174906457498456,Mexico,Latin America & Caribbean
+MHL,1,Upper middle,-0.6360479074254547,Marshall Islands,East Asia & Pacific
+MKD,1,Upper middle,1.739298807606535,North Macedonia,Europe & Central Asia
+MLI,2,Low,-5.241738653061412,Mali,Sub-Saharan Africa
+MLT,0,High,4.534755907348042,Malta,"Middle East, North Africa, Afghanistan & Pakistan"
+MMR,2,Lower middle,-3.899658490831468,Myanmar,East Asia & Pacific
+MNE,0,Upper middle,2.2239508214418935,Montenegro,Europe & Central Asia
+MNG,1,Upper middle,-0.10224141593193853,Mongolia,East Asia & Pacific
+MOZ,2,Low,-6.027543651253098,Mozambique,Sub-Saharan Africa
+MRT,2,Lower middle,-3.6940247448329004,Mauritania,Sub-Saharan Africa
+MUS,1,Upper middle,1.259952332635001,Mauritius,Sub-Saharan Africa
+MWI,2,Low,-5.734186186448826,Malawi,Sub-Saharan Africa
+MYS,0,Upper middle,2.1460523314851336,Malaysia,East Asia & Pacific
+NAM,2,Lower middle,-2.9387925797578274,Namibia,Sub-Saharan Africa
+NCL,1,High,1.940565862997124,New Caledonia,East Asia & Pacific
+NER,2,Low,-6.886545478473908,Niger,Sub-Saharan Africa
+NGA,2,Lower middle,-5.287104197027194,Nigeria,Sub-Saharan Africa
+NIC,1,Lower middle,-1.5063801396623837,Nicaragua,Latin America & Caribbean
+NLD,0,High,5.917852445273626,Netherlands,Europe & Central Asia
+NOR,0,High,5.07392742268948,Norway,Europe & Central Asia
+NPL,2,Lower middle,-3.317830571556057,Nepal,South Asia
+NRU,1,High,1.5913180797515911,Naoero,East Asia & Pacific
+NZL,0,High,4.364264062198637,New Zealand,East Asia & Pacific
+OMN,0,High,3.3007285687904857,Oman,"Middle East, North Africa, Afghanistan & Pakistan"
+PAK,2,Lower middle,-3.9211145845024484,Pakistan,"Middle East, North Africa, Afghanistan & Pakistan"
+PAN,1,High,0.94848356091992,Panama,Latin America & Caribbean
+PER,1,Upper middle,0.1458365967382465,Peru,Latin America & Caribbean
+PHL,1,Upper middle,-1.287748555308184,Philippines,East Asia & Pacific
+PLW,0,High,3.4544125404573425,Palau,East Asia & Pacific
+PNG,2,Lower middle,-5.236223691804972,Papua New Guinea,East Asia & Pacific
+POL,0,High,3.3066632653951697,Poland,Europe & Central Asia
+PRI,0,High,3.4465094697505085,Puerto Rico (US),Latin America & Caribbean
+PRK,1,Low,-1.845830864082471,"Korea, Dem. People's Rep.",East Asia & Pacific
+PRT,0,High,3.7256455232830943,Portugal,Europe & Central Asia
+PRY,1,Upper middle,-0.48949653841555124,Paraguay,Latin America & Caribbean
+PSE,1,Lower middle,0.633500408928566,West Bank and Gaza,"Middle East, North Africa, Afghanistan & Pakistan"
+PYF,1,High,1.230485316987084,French Polynesia,East Asia & Pacific
+QAT,0,High,4.743414896499481,Qatar,"Middle East, North Africa, Afghanistan & Pakistan"
+ROU,1,High,1.7585732433096577,Romania,Europe & Central Asia
+RUS,0,High,2.9963653758733853,Russian Federation,Europe & Central Asia
+RWA,2,Low,-5.68338772191812,Rwanda,Sub-Saharan Africa
+SAU,0,High,3.8026659669094287,Saudi Arabia,"Middle East, North Africa, Afghanistan & Pakistan"
+SDN,2,Low,-4.214067791322096,Sudan,Sub-Saharan Africa
+SEN,2,Lower middle,-3.622195230427609,Senegal,Sub-Saharan Africa
+SGP,0,High,5.68425925353263,Singapore,East Asia & Pacific
+SLB,2,Lower middle,-3.690586092636265,Solomon Islands,East Asia & Pacific
+SLE,2,Low,-5.7059694616917245,Sierra Leone,Sub-Saharan Africa
+SLV,1,Upper middle,-0.18628308922167847,El Salvador,Latin America & Caribbean
+SMR,0,High,4.475954254531008,San Marino,Europe & Central Asia
+SOM,2,Low,-7.563651564097082,"Somalia, Fed. Rep.",Sub-Saharan Africa
+SRB,0,Upper middle,2.3814269127851526,Serbia,Europe & Central Asia
+SSD,2,Low,-6.241072454494948,South Sudan,Sub-Saharan Africa
+STP,2,Lower middle,-2.4941532515220146,Sao Tome and Principe,Sub-Saharan Africa
+SUR,1,Upper middle,-0.04569879668048366,Suriname,Latin America & Caribbean
+SVK,0,High,3.2847057620606988,Slovak Republic,Europe & Central Asia
+SVN,0,High,4.0891682332131305,Slovenia,Europe & Central Asia
+SWE,0,High,5.133793588560483,Sweden,Europe & Central Asia
+SWZ,2,Lower middle,-3.4100546918835692,Eswatini,Sub-Saharan Africa
+SYC,0,High,2.20028918983285,Seychelles,Sub-Saharan Africa
+SYR,1,Low,-1.5135900336920778,Syrian Arab Republic,"Middle East, North Africa, Afghanistan & Pakistan"
+TCD,2,Low,-7.3843305471926355,Chad,Sub-Saharan Africa
+TGO,2,Lower middle,-5.247240009530553,Togo,Sub-Saharan Africa
+THA,1,Upper middle,1.0823560620235604,Thailand,East Asia & Pacific
+TJK,2,Lower middle,-2.4002118812464492,Tajikistan,Europe & Central Asia
+TKM,1,Upper middle,-0.14506464096391028,Turkmenistan,Europe & Central Asia
+TLS,2,Lower middle,-3.4333770171050344,Timor-Leste,East Asia & Pacific
+TON,1,Upper middle,-0.020345589454798904,Tonga,East Asia & Pacific
+TTO,0,High,2.734329648782024,Trinidad and Tobago,Latin America & Caribbean
+TUN,1,Lower middle,0.7406354666389455,Tunisia,"Middle East, North Africa, Afghanistan & Pakistan"
+TUR,1,Upper middle,1.7913466547093373,Turkiye,Europe & Central Asia
+TUV,1,Upper middle,-0.4242336908027114,Tuvalu,East Asia & Pacific
+TZA,2,Lower middle,-5.214569982264006,Tanzania,Sub-Saharan Africa
+UGA,2,Low,-5.972434790946435,Uganda,Sub-Saharan Africa
+UKR,1,Upper middle,1.8021181445086087,Ukraine,Europe & Central Asia
+URY,0,High,2.358284998673026,Uruguay,Latin America & Caribbean
+USA,0,High,4.932136679291534,United States,North America
+UZB,1,Lower middle,-0.1875734539848797,Uzbekistan,Europe & Central Asia
+VCT,1,Upper middle,1.5307246298094095,St. Vincent and the Grenadines,Latin America & Caribbean
+VEN,1,Lower middle,0.9000126275278711,"Venezuela, RB",Latin America & Caribbean
+VNM,1,Upper middle,-0.17304970806706463,Viet Nam,East Asia & Pacific
+VUT,2,Lower middle,-3.103178777836934,Vanuatu,East Asia & Pacific
+WSM,1,Upper middle,-1.8477282523933027,Samoa,East Asia & Pacific
+YEM,2,Low,-3.704642700840301,"Yemen, Rep.","Middle East, North Africa, Afghanistan & Pakistan"
+ZAF,1,Upper middle,-0.028860788516212498,South Africa,Sub-Saharan Africa
+ZMB,2,Lower middle,-4.977248557924613,Zambia,Sub-Saharan Africa
+ZWE,2,Lower middle,-4.779882092065324,Zimbabwe,Sub-Saharan Africa

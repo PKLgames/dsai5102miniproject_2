@@ -1,0 +1,4 @@
+archetype,n,mean_index,high,upper_mid,lower_mid,low,gaps,strengths,examples
+Advanced,66,4.0062928863326706,61,5,0,0,"Unemployment, Forest cover, Water withdrawal","Fixed broadband, Internet users","Malaysia, Russian Federation, Greece, Switzerland, Netherlands"
+Mature middle,73,0.19552784682075305,7,52,12,2,"Fixed broadband, CO2 emissions per capita, Internet users","Renewable energy share, Electricity access","Kiribati, Guyana, Ecuador, Grenada, New Caledonia"
+Emerging frontier,59,-4.723540056201208,0,1,35,23,"Electricity access, Secondary enrolment, Life expectancy","Unemployment, Forest cover","Central African Republic, Burkina Faso, Angola, Senegal, Tajikistan"

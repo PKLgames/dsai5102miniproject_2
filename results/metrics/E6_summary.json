@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "Typology: Gaussian mixture instead of K-means",
+      "result": "ARI 0.582",
+      "reading": "partial overlap"
+    },
+    {
+      "check": "Typology: full 28-D space instead of PC1-PC2",
+      "result": "ARI 0.938",
+      "reading": "same partition"
+    },
+    {
+      "check": "Shortlist: $\\alpha$=0.25 instead of 0.35",
+      "result": "14 kept, Jaccard 0.86",
+      "reading": "stable"
+    },
+    {
+      "check": "Shortlist: $\\alpha$=0.5 instead of 0.35",
+      "result": "11 kept, Jaccard 0.92",
+      "reading": "stable"
+    },
+    {
+      "check": "Shortlist: East Asia & Pacific removed",
+      "result": "10 kept, Jaccard 0.83",
+      "reading": "stable"
+    },
+    {
+      "check": "Index: PC1--PC3 instead of 28 indicators",
+      "result": "macro-F1 0.761 vs 0.834",
+      "reading": "worse"
+    }
+  ],
+  "f1_3pc": 0.761,
+  "f1_28": 0.8336
+}

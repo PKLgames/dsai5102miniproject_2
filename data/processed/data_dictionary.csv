@@ -1,0 +1,29 @@
+indicator,wdi_code,domain,unit,transform,missing_before,missing_after
+Cereal yield,AG.YLD.CREL.KG,Agriculture & food,kg/ha,"log1p + winsor(1,99) + z",0.0873,0.0873
+Undernourishment,SN.ITK.DEFC.ZS,Agriculture & food,% of population,"winsor(1,99) + z",0.1507,0.1507
+Fixed broadband,IT.NET.BBND.P2,Digital,per 100 people,"log1p + winsor(1,99) + z",0.0645,0.0645
+Internet users,IT.NET.USER.ZS,Digital,% of population,"winsor(1,99) + z",0.0372,0.0372
+Mobile subscriptions,IT.CEL.SETS.P2,Digital,per 100 people,"log1p + winsor(1,99) + z",0.0117,0.0117
+FDI inflow,BX.KLT.DINV.WD.GD.ZS,Economy,% of GDP,"winsor(1,99) + z",0.0378,0.0378
+GDP growth,NY.GDP.MKTP.KD.ZG,Economy,%/year,"winsor(1,99) + z",0.0168,0.0168
+GDP per capita,NY.GDP.PCAP.CD,Economy,current US$,"log1p + winsor(1,99) + z",0.0117,0.0117
+GNI per capita PPP,NY.GNP.PCAP.PP.CD,Economy,intl $,"log1p + winsor(1,99) + z",0.0395,0.0395
+Trade openness,NE.TRD.GNFS.ZS,Economy,% of GDP,"winsor(1,99) + z",0.1277,0.1277
+Unemployment,SL.UEM.TOTL.ZS,Economy,% labour force,"winsor(1,99) + z",0.0685,0.0685
+Agricultural land,AG.LND.AGRI.ZS,Environment,% of land,"winsor(1,99) + z",0.0026,0.0026
+CO2 emissions per capita,EN.GHG.CO2.PC.CE.AR5,Environment,t CO2e/capita,"log1p + winsor(1,99) + z",0.0259,0.0259
+Forest cover,AG.LND.FRST.ZS,Environment,% of land,"winsor(1,99) + z",0.0077,0.0077
+PM2.5 exposure,EN.ATM.PM25.MC.M3,Environment,ug/m3,"log1p + winsor(1,99) + z",0.0156,0.0156
+Water withdrawal,ER.H2O.FWTL.ZS,Environment,% of resources,"log1p + winsor(1,99) + z",0.1089,0.1089
+Health spending,SH.XPD.CHEX.GD.ZS,Human development,% of GDP,"winsor(1,99) + z",0.0381,0.0381
+Life expectancy,SP.DYN.LE00.IN,Human development,years,"winsor(1,99) + z",0.0,0.0
+Maternal mortality,SH.STA.MMRT,Human development,"per 100,000","log1p + winsor(1,99) + z",0.0173,0.0173
+Measles immunisation,SH.IMM.MEAS,Human development,% age 12-23m,"winsor(1,99) + z",0.0227,0.0227
+Secondary enrolment,SE.SEC.ENRR,Human development,% gross,"winsor(1,99) + z",0.2781,0.2781
+Tertiary enrolment,SE.TER.ENRR,Human development,% gross,"winsor(1,99) + z",0.3446,0.3446
+Under-5 mortality,SH.DYN.MORT,Human development,"per 1,000","log1p + winsor(1,99) + z",0.0225,0.0225
+Electricity access,EG.ELC.ACCS.ZS,Urban & energy,% of population,"winsor(1,99) + z",0.0017,0.0017
+Energy use per capita,EG.USE.PCAP.KG.OE,Urban & energy,kg oil equiv.,"log1p + winsor(1,99) + z",0.226,0.226
+Renewable electricity,EG.ELC.RNEW.ZS,Urban & energy,% of electricity,"winsor(1,99) + z",0.0816,0.0816
+Renewable energy share,EG.FEC.RNEW.ZS,Urban & energy,% of final energy,"winsor(1,99) + z",0.0415,0.0415
+Urbanisation,SP.URB.TOTL.IN.ZS,Urban & energy,% of population,"winsor(1,99) + z",0.0,0.0

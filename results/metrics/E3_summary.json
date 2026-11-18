@@ -1,0 +1,210 @@
+{
+  "rows": [
+    {
+      "set": "All 28",
+      "d": 28,
+      "model": "LogReg",
+      "acc": 0.7899,
+      "acc_sd": 0.0511,
+      "bal_acc": 0.7692,
+      "bal_acc_sd": 0.0611,
+      "f1": 0.7697,
+      "f1_sd": 0.059
+    },
+    {
+      "set": "All 28",
+      "d": 28,
+      "model": "RandomForest",
+      "acc": 0.8454,
+      "acc_sd": 0.0553,
+      "bal_acc": 0.8278,
+      "bal_acc_sd": 0.0677,
+      "f1": 0.8336,
+      "f1_sd": 0.0666
+    },
+    {
+      "set": "All 28",
+      "d": 28,
+      "model": "GradBoost",
+      "acc": 0.8355,
+      "acc_sd": 0.0476,
+      "bal_acc": 0.8129,
+      "bal_acc_sd": 0.0607,
+      "f1": 0.8192,
+      "f1_sd": 0.0607
+    },
+    {
+      "set": "Shortlist 12 (blind)",
+      "d": 12,
+      "model": "LogReg",
+      "acc": 0.8029,
+      "acc_sd": 0.0556,
+      "bal_acc": 0.7808,
+      "bal_acc_sd": 0.0722,
+      "f1": 0.7778,
+      "f1_sd": 0.0675
+    },
+    {
+      "set": "Shortlist 12 (blind)",
+      "d": 12,
+      "model": "RandomForest",
+      "acc": 0.8395,
+      "acc_sd": 0.0622,
+      "bal_acc": 0.8162,
+      "bal_acc_sd": 0.0763,
+      "f1": 0.8206,
+      "f1_sd": 0.0796
+    },
+    {
+      "set": "Shortlist 12 (blind)",
+      "d": 12,
+      "model": "GradBoost",
+      "acc": 0.8252,
+      "acc_sd": 0.0593,
+      "bal_acc": 0.7933,
+      "bal_acc_sd": 0.0707,
+      "f1": 0.7945,
+      "f1_sd": 0.0777
+    },
+    {
+      "set": "Shortlist 12 (supervised)",
+      "d": 12,
+      "model": "LogReg",
+      "acc": 0.8122,
+      "acc_sd": 0.0569,
+      "bal_acc": 0.7945,
+      "bal_acc_sd": 0.064,
+      "f1": 0.7962,
+      "f1_sd": 0.0612
+    },
+    {
+      "set": "Shortlist 12 (supervised)",
+      "d": 12,
+      "model": "RandomForest",
+      "acc": 0.8646,
+      "acc_sd": 0.0612,
+      "bal_acc": 0.8495,
+      "bal_acc_sd": 0.0722,
+      "f1": 0.8572,
+      "f1_sd": 0.0676
+    },
+    {
+      "set": "Shortlist 12 (supervised)",
+      "d": 12,
+      "model": "GradBoost",
+      "acc": 0.8375,
+      "acc_sd": 0.044,
+      "bal_acc": 0.8232,
+      "bal_acc_sd": 0.05,
+      "f1": 0.8239,
+      "f1_sd": 0.0496
+    },
+    {
+      "set": "Rapid screen 3",
+      "d": 3,
+      "model": "LogReg",
+      "acc": 0.8406,
+      "acc_sd": 0.0489,
+      "bal_acc": 0.8125,
+      "bal_acc_sd": 0.0543,
+      "f1": 0.8185,
+      "f1_sd": 0.0557
+    },
+    {
+      "set": "Rapid screen 3",
+      "d": 3,
+      "model": "RandomForest",
+      "acc": 0.8798,
+      "acc_sd": 0.0613,
+      "bal_acc": 0.8618,
+      "bal_acc_sd": 0.0705,
+      "f1": 0.8662,
+      "f1_sd": 0.0687
+    },
+    {
+      "set": "Rapid screen 3",
+      "d": 3,
+      "model": "GradBoost",
+      "acc": 0.8404,
+      "acc_sd": 0.0675,
+      "bal_acc": 0.8204,
+      "bal_acc_sd": 0.0739,
+      "f1": 0.8226,
+      "f1_sd": 0.0767
+    }
+  ],
+  "per_class_recall_sparse_rf": {
+    "High": 0.9117647058823529,
+    "Upper middle": 0.8758620689655172,
+    "Lower middle": 0.7489361702127659,
+    "Low": 0.728
+  },
+  "confusion_sparse_rf": [
+    [
+      310,
+      30,
+      0,
+      0
+    ],
+    [
+      17,
+      254,
+      19,
+      0
+    ],
+    [
+      0,
+      48,
+      176,
+      11
+    ],
+    [
+      0,
+      5,
+      29,
+      91
+    ]
+  ],
+  "confusion_top3_rf": [
+    [
+      314,
+      26,
+      0,
+      0
+    ],
+    [
+      12,
+      266,
+      7,
+      5
+    ],
+    [
+      0,
+      36,
+      193,
+      6
+    ],
+    [
+      0,
+      5,
+      22,
+      98
+    ]
+  ],
+  "class_counts": {
+    "High": 68,
+    "Upper middle": 58,
+    "Lower middle": 47,
+    "Low": 25
+  },
+  "cv": {
+    "splits": 5,
+    "repeats": 5
+  },
+  "sets": {
+    "all28": 28,
+    "sparse": 12,
+    "top12": 12,
+    "top3": 3
+  }
+}

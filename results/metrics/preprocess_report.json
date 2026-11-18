@@ -1,0 +1,17 @@
+{
+  "window": [
+    2005,
+    2022
+  ],
+  "rows": 3517,
+  "indicators": 28,
+  "countries": 198,
+  "dropped_rows_low_coverage": 389,
+  "dropped_indicators": [],
+  "winsorised_values": 1572,
+  "missing_before_mean": 0.0674,
+  "values_imputed": 6641,
+  "imputed_fraction": 0.0674,
+  "knn_k": 5,
+  "checksum_dataset": "030c7fc7b575b6e8f5bb509c2d1263dbe529ea29a59ceb997b1acb2ea0a5ebb3"
+}

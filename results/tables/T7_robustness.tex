@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering
+\caption{Robustness of the three answers to reasonable changes of method.}
+\label{tab:robustness}
+\small
+\begin{tabular}{lll}
+\toprule
+\textbf{Check} & \textbf{Result} & \textbf{Reading} \\
+\midrule
+Typology: Gaussian mixture instead of K-means & ARI 0.582 & partial overlap \\
+Typology: full 28-D space instead of PC1-PC2 & ARI 0.938 & same partition \\
+Shortlist: $\alpha$=0.25 instead of 0.35 & 14 kept, Jaccard 0.86 & stable \\
+Shortlist: $\alpha$=0.5 instead of 0.35 & 11 kept, Jaccard 0.92 & stable \\
+Shortlist: East Asia & Pacific removed & 10 kept, Jaccard 0.83 & stable \\
+Index: PC1--PC3 instead of 28 indicators & macro-F1 0.761 vs 0.834 & worse \\
+\bottomrule
+\end{tabular}
+\end{table}

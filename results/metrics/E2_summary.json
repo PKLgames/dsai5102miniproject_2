@@ -1,0 +1,451 @@
+{
+  "alpha_star": 0.35,
+  "sparse_n": 12,
+  "sparse_set": [
+    "GDP per capita",
+    "GNI per capita PPP",
+    "Life expectancy",
+    "Under-5 mortality",
+    "Maternal mortality",
+    "Secondary enrolment",
+    "Tertiary enrolment",
+    "Energy use per capita",
+    "Electricity access",
+    "Renewable energy share",
+    "Internet users",
+    "Undernourishment"
+  ],
+  "sparse_fev": 0.3819,
+  "dense_fev": 0.5634,
+  "sparse_table": [
+    {
+      "alpha": 0.005,
+      "n_nonzero_pc1": 27,
+      "n_nonzero_pc2": 20,
+      "fev": 0.5634
+    },
+    {
+      "alpha": 0.01,
+      "n_nonzero_pc1": 26,
+      "n_nonzero_pc2": 20,
+      "fev": 0.5604
+    },
+    {
+      "alpha": 0.02,
+      "n_nonzero_pc1": 26,
+      "n_nonzero_pc2": 17,
+      "fev": 0.5503
+    },
+    {
+      "alpha": 0.03,
+      "n_nonzero_pc1": 26,
+      "n_nonzero_pc2": 15,
+      "fev": 0.5348
+    },
+    {
+      "alpha": 0.05,
+      "n_nonzero_pc1": 26,
+      "n_nonzero_pc2": 13,
+      "fev": 0.4919
+    },
+    {
+      "alpha": 0.08,
+      "n_nonzero_pc1": 22,
+      "n_nonzero_pc2": 17,
+      "fev": 0.4237
+    },
+    {
+      "alpha": 0.12,
+      "n_nonzero_pc1": 19,
+      "n_nonzero_pc2": 16,
+      "fev": 0.4054
+    },
+    {
+      "alpha": 0.18,
+      "n_nonzero_pc1": 15,
+      "n_nonzero_pc2": 12,
+      "fev": 0.3919
+    },
+    {
+      "alpha": 0.25,
+      "n_nonzero_pc1": 14,
+      "n_nonzero_pc2": 10,
+      "fev": 0.3809
+    },
+    {
+      "alpha": 0.35,
+      "n_nonzero_pc1": 12,
+      "n_nonzero_pc2": 12,
+      "fev": 0.3819
+    },
+    {
+      "alpha": 0.5,
+      "n_nonzero_pc1": 11,
+      "n_nonzero_pc2": 10,
+      "fev": 0.3462
+    },
+    {
+      "alpha": 0.7,
+      "n_nonzero_pc1": 9,
+      "n_nonzero_pc2": 8,
+      "fev": 0.2672
+    },
+    {
+      "alpha": 1.0,
+      "n_nonzero_pc1": 6,
+      "n_nonzero_pc2": 5,
+      "fev": 0.2026
+    },
+    {
+      "alpha": 1.5,
+      "n_nonzero_pc1": 4,
+      "n_nonzero_pc2": 4,
+      "fev": 0.1909
+    }
+  ],
+  "boot_freq": {
+    "GDP per capita": 0.825,
+    "GNI per capita PPP": 0.985,
+    "GDP growth": 0.0,
+    "Trade openness": 0.025,
+    "Unemployment": 0.0,
+    "FDI inflow": 0.02,
+    "Life expectancy": 0.89,
+    "Under-5 mortality": 1.0,
+    "Maternal mortality": 0.75,
+    "Secondary enrolment": 1.0,
+    "Tertiary enrolment": 0.77,
+    "Health spending": 0.0,
+    "Measles immunisation": 0.17,
+    "Urbanisation": 0.19,
+    "Energy use per capita": 0.79,
+    "Electricity access": 0.91,
+    "Renewable energy share": 0.985,
+    "Renewable electricity": 0.0,
+    "CO2 emissions per capita": 0.095,
+    "PM2.5 exposure": 0.0,
+    "Forest cover": 0.0,
+    "Water withdrawal": 0.0,
+    "Agricultural land": 0.0,
+    "Internet users": 1.0,
+    "Mobile subscriptions": 0.195,
+    "Fixed broadband": 0.04,
+    "Cereal yield": 0.025,
+    "Undernourishment": 0.7
+  },
+  "boot_n": 200,
+  "nested_curve": [
+    {
+      "k": 1,
+      "macro_f1": 0.7812,
+      "balanced_acc": 0.7829
+    },
+    {
+      "k": 2,
+      "macro_f1": 0.8247,
+      "balanced_acc": 0.8106
+    },
+    {
+      "k": 3,
+      "macro_f1": 0.8085,
+      "balanced_acc": 0.803
+    },
+    {
+      "k": 4,
+      "macro_f1": 0.8261,
+      "balanced_acc": 0.816
+    },
+    {
+      "k": 5,
+      "macro_f1": 0.8258,
+      "balanced_acc": 0.8149
+    },
+    {
+      "k": 6,
+      "macro_f1": 0.8438,
+      "balanced_acc": 0.8336
+    },
+    {
+      "k": 7,
+      "macro_f1": 0.8503,
+      "balanced_acc": 0.8393
+    },
+    {
+      "k": 8,
+      "macro_f1": 0.8471,
+      "balanced_acc": 0.8346
+    },
+    {
+      "k": 9,
+      "macro_f1": 0.8568,
+      "balanced_acc": 0.8452
+    },
+    {
+      "k": 10,
+      "macro_f1": 0.8563,
+      "balanced_acc": 0.8479
+    },
+    {
+      "k": 11,
+      "macro_f1": 0.847,
+      "balanced_acc": 0.8346
+    },
+    {
+      "k": 12,
+      "macro_f1": 0.8355,
+      "balanced_acc": 0.8246
+    },
+    {
+      "k": 13,
+      "macro_f1": 0.8535,
+      "balanced_acc": 0.8452
+    },
+    {
+      "k": 14,
+      "macro_f1": 0.8707,
+      "balanced_acc": 0.8628
+    }
+  ],
+  "sup_freq12": {
+    "GDP per capita": 1.0,
+    "GNI per capita PPP": 0.4,
+    "GDP growth": 0.8,
+    "Trade openness": 0.4,
+    "Unemployment": 0.6,
+    "FDI inflow": 0.0,
+    "Life expectancy": 0.6,
+    "Under-5 mortality": 0.2,
+    "Maternal mortality": 0.2,
+    "Secondary enrolment": 0.2,
+    "Tertiary enrolment": 0.4,
+    "Health spending": 0.4,
+    "Measles immunisation": 0.2,
+    "Urbanisation": 0.4,
+    "Energy use per capita": 0.2,
+    "Electricity access": 0.4,
+    "Renewable energy share": 0.6,
+    "Renewable electricity": 0.4,
+    "CO2 emissions per capita": 0.8,
+    "PM2.5 exposure": 0.4,
+    "Forest cover": 0.6,
+    "Water withdrawal": 0.4,
+    "Agricultural land": 0.2,
+    "Internet users": 0.6,
+    "Mobile subscriptions": 0.8,
+    "Fixed broadband": 0.2,
+    "Cereal yield": 0.2,
+    "Undernourishment": 0.4
+  },
+  "sup12": [
+    "GDP per capita",
+    "Mobile subscriptions",
+    "GDP growth",
+    "PM2.5 exposure",
+    "Trade openness",
+    "Fixed broadband",
+    "Health spending",
+    "Energy use per capita",
+    "Measles immunisation",
+    "Renewable electricity",
+    "CO2 emissions per capita",
+    "Internet users"
+  ],
+  "sup3": [
+    "GDP per capita",
+    "Mobile subscriptions",
+    "GDP growth"
+  ],
+  "global_curve": [
+    {
+      "k": 1,
+      "bal_acc": 0.7652,
+      "set": [
+        "GDP per capita"
+      ]
+    },
+    {
+      "k": 2,
+      "bal_acc": 0.8264,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions"
+      ]
+    },
+    {
+      "k": 3,
+      "bal_acc": 0.8494,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth"
+      ]
+    },
+    {
+      "k": 4,
+      "bal_acc": 0.8385,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure"
+      ]
+    },
+    {
+      "k": 5,
+      "bal_acc": 0.8491,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness"
+      ]
+    },
+    {
+      "k": 6,
+      "bal_acc": 0.8588,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband"
+      ]
+    },
+    {
+      "k": 7,
+      "bal_acc": 0.8725,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending"
+      ]
+    },
+    {
+      "k": 8,
+      "bal_acc": 0.8904,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita"
+      ]
+    },
+    {
+      "k": 9,
+      "bal_acc": 0.8574,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation"
+      ]
+    },
+    {
+      "k": 10,
+      "bal_acc": 0.8751,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation",
+        "Renewable electricity"
+      ]
+    },
+    {
+      "k": 11,
+      "bal_acc": 0.8643,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation",
+        "Renewable electricity",
+        "CO2 emissions per capita"
+      ]
+    },
+    {
+      "k": 12,
+      "bal_acc": 0.8676,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation",
+        "Renewable electricity",
+        "CO2 emissions per capita",
+        "Internet users"
+      ]
+    },
+    {
+      "k": 13,
+      "bal_acc": 0.8593,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation",
+        "Renewable electricity",
+        "CO2 emissions per capita",
+        "Internet users",
+        "Water withdrawal"
+      ]
+    },
+    {
+      "k": 14,
+      "bal_acc": 0.8469,
+      "set": [
+        "GDP per capita",
+        "Mobile subscriptions",
+        "GDP growth",
+        "PM2.5 exposure",
+        "Trade openness",
+        "Fixed broadband",
+        "Health spending",
+        "Energy use per capita",
+        "Measles immunisation",
+        "Renewable electricity",
+        "CO2 emissions per capita",
+        "Internet users",
+        "Water withdrawal",
+        "Secondary enrolment"
+      ]
+    }
+  ],
+  "jaccard": 0.1429,
+  "runtime_s": 629.8
+}

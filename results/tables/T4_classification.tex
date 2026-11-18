@@ -1,0 +1,25 @@
+\begin{table}[t]
+\centering
+\caption{Income-group classification, repeated stratified 5-fold CV (5 repeats).}
+\label{tab:classification}
+\small
+\begin{tabular}{llcrrrr}
+\toprule
+\textbf{set} & \textbf{d} & \textbf{model} & \textbf{acc} & \textbf{acc_sd} & \textbf{bal_acc} & \textbf{bal_acc_sd} & \textbf{f1} & \textbf{f1_sd} \\
+\midrule
+All 28 & 28 & LogReg & 0.790 & 0.051 & 0.769 & 0.061 & 0.770 & 0.059 \\
+All 28 & 28 & RandomForest & 0.845 & 0.055 & 0.828 & 0.068 & 0.834 & 0.067 \\
+All 28 & 28 & GradBoost & 0.835 & 0.048 & 0.813 & 0.061 & 0.819 & 0.061 \\
+Shortlist 12 (blind) & 12 & LogReg & 0.803 & 0.056 & 0.781 & 0.072 & 0.778 & 0.067 \\
+Shortlist 12 (blind) & 12 & RandomForest & 0.839 & 0.062 & 0.816 & 0.076 & 0.821 & 0.080 \\
+Shortlist 12 (blind) & 12 & GradBoost & 0.825 & 0.059 & 0.793 & 0.071 & 0.795 & 0.078 \\
+Shortlist 12 (supervised) & 12 & LogReg & 0.812 & 0.057 & 0.794 & 0.064 & 0.796 & 0.061 \\
+Shortlist 12 (supervised) & 12 & RandomForest & 0.865 & 0.061 & 0.850 & 0.072 & 0.857 & 0.068 \\
+Shortlist 12 (supervised) & 12 & GradBoost & 0.838 & 0.044 & 0.823 & 0.050 & 0.824 & 0.050 \\
+Rapid screen 3 & 3 & LogReg & 0.841 & 0.049 & 0.813 & 0.054 & 0.818 & 0.056 \\
+Rapid screen 3 & 3 & RandomForest & 0.880 & 0.061 & 0.862 & 0.070 & 0.866 & 0.069 \\
+Rapid screen 3 & 3 & GradBoost & 0.840 & 0.067 & 0.820 & 0.074 & 0.823 & 0.077 \\
+\bottomrule
+\end{tabular}
+\vspace{2pt}\parbox{0.92\linewidth}{\footnotesize \texttt{f1} is macro-averaged; standard deviations are over the 25 folds.}
+\end{table}

@@ -1,0 +1,5 @@
+.venv/
+.uvcache/
+.mplconfig/
+__pycache__/
+scratch/

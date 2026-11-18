@@ -1,0 +1,29 @@
+indicator,domain,sparse_pca,forward,boot_freq,sup_freq,pc1_loading
+Internet users,Digital,yes,yes,1.0,0.6,0.6
+Under-5 mortality,Human development,yes,,1.0,0.2,-0.438
+Secondary enrolment,Human development,yes,,1.0,0.2,0.268
+Renewable energy share,Urban & energy,yes,,0.985,0.6,-0.166
+GNI per capita PPP,Economy,yes,,0.985,0.4,0.486
+Electricity access,Urban & energy,yes,,0.91,0.4,0.151
+Life expectancy,Human development,yes,,0.89,0.6,0.175
+GDP per capita,Economy,yes,yes,0.825,1.0,0.191
+Energy use per capita,Urban & energy,yes,yes,0.79,0.2,0.1
+Tertiary enrolment,Human development,yes,,0.77,0.4,0.056
+Maternal mortality,Human development,yes,,0.75,0.2,-0.089
+Undernourishment,Agriculture & food,yes,,0.7,0.4,-0.05
+Mobile subscriptions,Digital,,yes,0.195,0.8,0.0
+Urbanisation,Urban & energy,,,0.19,0.4,0.0
+Measles immunisation,Human development,,yes,0.17,0.2,0.0
+CO2 emissions per capita,Environment,,yes,0.095,0.8,0.0
+Fixed broadband,Digital,,yes,0.04,0.2,0.0
+Trade openness,Economy,,yes,0.025,0.4,0.0
+Cereal yield,Agriculture & food,,,0.025,0.2,0.0
+FDI inflow,Economy,,,0.02,0.0,0.0
+GDP growth,Economy,,yes,0.0,0.8,-0.0
+Unemployment,Economy,,,0.0,0.6,0.0
+Forest cover,Environment,,,0.0,0.6,-0.0
+Health spending,Human development,,yes,0.0,0.4,0.0
+Renewable electricity,Urban & energy,,yes,0.0,0.4,-0.0
+PM2.5 exposure,Environment,,yes,0.0,0.4,-0.0
+Water withdrawal,Environment,,,0.0,0.4,0.0
+Agricultural land,Environment,,,0.0,0.2,-0.0
