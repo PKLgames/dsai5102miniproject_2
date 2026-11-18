@@ -14,6 +14,7 @@ Group 16 · Chen Wanchuan · Lu Yuqing · Yuen Lok Yan
 | Report, editable source | [`report/DSAI5102_Group16_Report.md`](report/DSAI5102_Group16_Report.md) |
 | Report, PDF (27 pp.) | [`report/DSAI5102_Group16_Report.pdf`](report/DSAI5102_Group16_Report.pdf) |
 | Slides, PowerPoint (14 slides, 16:9) | [`slides/DSAI5102_Group16_Slides.pptx`](slides/DSAI5102_Group16_Slides.pptx) |
+| Slides, PDF (14 pp., exported from the deck) | [`slides/DSAI5102_Group16_Slides.pdf`](slides/DSAI5102_Group16_Slides.pdf) |
 | Slide previews (PNG, one per slide) | [`slides/preview/`](slides/preview) |
 
 The report is authored in Markdown and typeset to PDF with pypandoc + WeasyPrint, so the two
