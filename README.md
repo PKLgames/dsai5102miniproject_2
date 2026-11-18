@@ -44,26 +44,30 @@ and the remaining sixteen buy diagnosis rather than ordering.
 
 ## Reproducing
 
-Two environments are used, because the analysis predates the slide toolchain:
-
 ```bash
-# analysis (Python 3.10, numpy/pandas/scipy/scikit-learn/matplotlib)
-PY=/home/pklgames/coding/dsai5104report/.venv/bin/python
-$PY src/01_preprocess.py      # 4 s   panel construction, coverage report
-$PY src/02_index.py           # 2 s   index + stability (E1, Table 1, Figure 2)
-$PY src/03_selection.py       # 630 s the two shortlists (E2, Table 2, Figure 3)
-$PY src/03b_fig_selection.py  # 3 s   selection figure + fidelity table
-$PY src/04_classify.py        # 95 s  classification (E3, Table 3, Figure 4)
-$PY src/05_cluster.py         # 34 s  archetypes (E4, Tables 4-5, Figure 5)
-$PY src/06_dynamics.py        # 6 s   dynamics (E5, Table 6, Figure 6)
-$PY src/07_robustness.py      # 48 s  robustness (E6, Table 7)
-$PY src/10_slide_figs.py      # 3 s   the two simplified slide figures (S1, S2)
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt      # analysis + document toolchain
+                                     # the PDF build also needs a `pandoc` binary on PATH
 
-# documents (Python 3.14, pypandoc/weasyprint/python-pptx)
-PZ=/home/pklgames/coding/dsai5102MiniProject/.venv/bin/python
-$PZ report/build_report_pdf.py report/DSAI5102_Group16_Report.md
-$PZ slides/build_slides.py
+python src/01_preprocess.py      # 4 s   panel construction, coverage report
+python src/02_index.py           # 2 s   index + stability (E1, Table 2, Figure 2)
+python src/03_selection.py       # 630 s the two shortlists (E2, Table 3, Figure 3)
+python src/03b_fig_selection.py  # 3 s   selection figure + fidelity table
+python src/04_classify.py        # 95 s  classification (E3, Table 4, Figure 4)
+python src/05_cluster.py         # 34 s  archetypes (E4, Tables 5-6, Figure 5)
+python src/06_dynamics.py        # 6 s   dynamics (E5, Table 7, Figure 6)
+python src/07_robustness.py      # 48 s  robustness (E6, Table 8)
+python src/10_slide_figs.py      # 3 s   the two simplified slide figures (S1, S2)
+
+python report/build_report_pdf.py report/DSAI5102_Group16_Report.md   # -> PDF
+python slides/build_slides.py                                        # -> PPTX
+python slides/preview_slides.py                                      # -> slides/preview/
 ```
+
+The two toolchains (numeric stack, document stack) were originally installed in
+separate environments and run fine that way; a single environment also works. All
+scripts resolve paths relative to the repository root, so they can be run from
+anywhere.
 
 Everything is single-threaded and seeded (`random_state` 0 / 42 / 7 / 11, bootstrap B = 200);
 the full analysis runs in under 15 minutes on a laptop CPU with no GPU.

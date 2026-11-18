@@ -6,6 +6,7 @@ wider than Arial, so the preview is a pessimistic check.
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -16,10 +17,10 @@ ROOT = Path(__file__).resolve().parent.parent
 PPTX = ROOT / "slides" / "DSAI5102_Group16_Slides.pptx"
 OUT = ROOT / "slides" / "preview"
 
-FONT_DIR = Path(
-    "/home/pklgames/coding/dsai5104report/.venv/lib/python3.10/site-packages"
-    "/matplotlib/mpl-data/fonts/ttf"
-)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fonts import dejavu_paths                                   # noqa: E402
+
+FONT_DIR = dejavu_paths()[0].parent
 DPI = 110
 EMU = 914400.0
 

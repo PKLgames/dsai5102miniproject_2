@@ -1,7 +1,7 @@
 """Build the DSAI5102 Format-1 slide deck (English, 16:9) with python-pptx.
 
-Run with the interpreter that has python-pptx:
-  /home/pklgames/coding/dsai5102MiniProject/.venv/bin/python slides/build_slides.py
+Run from the repository root with an interpreter that has python-pptx:
+  python slides/build_slides.py
 """
 
 from __future__ import annotations
@@ -20,12 +20,14 @@ ROOT = Path(__file__).resolve().parent.parent
 FIGS = ROOT / "results" / "figures"
 OUT = ROOT / "slides" / "DSAI5102_Group16_Slides.pptx"
 
-FONT_DIR = Path(
-    "/home/pklgames/coding/dsai5104report/.venv/lib/python3.10/site-packages"
-    "/matplotlib/mpl-data/fonts/ttf"
-)
-F_REG = ImageFont.truetype(str(FONT_DIR / "DejaVuSans.ttf"), 100)
-F_BOLD = ImageFont.truetype(str(FONT_DIR / "DejaVuSans-Bold.ttf"), 100)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from fonts import dejavu_paths                                   # noqa: E402
+
+F_REG_PATH, F_BOLD_PATH = dejavu_paths()
+F_REG = ImageFont.truetype(str(F_REG_PATH), 100,
+                           layout_engine=ImageFont.Layout.BASIC)
+F_BOLD = ImageFont.truetype(str(F_BOLD_PATH), 100,
+                            layout_engine=ImageFont.Layout.BASIC)
 
 INK = RGBColor(0x1F, 0x23, 0x28)
 MUTED = RGBColor(0x5A, 0x64, 0x72)
