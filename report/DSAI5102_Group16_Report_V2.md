@@ -26,7 +26,7 @@ The preparation order follows the intended unit of analysis. We first apply log(
 
 At this stage, 198 of the 5,544 economy–indicator cells are missing (3.6%). For the descriptive analysis, each variable is clipped at its first and ninety-ninth percentiles across economy means, scaled using its observed mean and standard deviation, and filled using five-nearest-neighbour imputation (Troyanskaya et al., 2001). Each missing entry is filled by the unweighted mean from up to five neighbouring economies with that indicator observed. The distance uses indicators observed for both economies and adjusts for the number of shared observations (scikit-learn developers, n.d.-b). We standardise the indicators before computing distances so that variables measured on larger scales do not dominate the choice of neighbours. A final standardisation gives each completed variable unit variance. These choices reduce scale effects; they do not eliminate uncertainty from missing or potentially non-random observations.
 
-![Figure 1](DSAI5102_Group16_Report_V2_images/image1.png)
+![Figure 1](../results/figures/missingness.png)
 
 Figure 1. Missingness for the 14 indicators with the highest pre-filter missingness, before and after the economy-year coverage filter, using the official 2005–2022 panel. Percentages concern annual observations before imputation, not the aggregated country matrix.
 
@@ -38,7 +38,7 @@ The classification analysis relearns clipping thresholds, scaling and imputation
 
 Figure 2 links each research question to its analysis. The classification path shows within-fold feature selection. In an additional comparison, the full-sample ranking path supplies a fixed nine-indicator list and the classifier is trained within each fold.
 
-![Figure 2](DSAI5102_Group16_Report_V2_images/image2.png)
+![Figure 2](../results/figures/workflow.png)
 
 Figure 2. Analysis workflow linking preparation to ranking, classification and profile comparison. The classification branch depicts training-fold selection. The separate fixed-list benchmark takes its indicator list from the ranking branch.
 
@@ -78,13 +78,13 @@ Finally, we rebuild the index separately for 2005–2009 and 2015–2019, applyi
 
 For the first research question, the first component explains 50.1% of total standardised variation and the first two explain 58.7%. The first direction is therefore prominent, but substantial variation remains outside it. Its bootstrap percentile interval is 46.6% to 53.7%. The minimum ranking correlation after deleting one indicator is 0.999; correlations from the conditional bootstrap range from 0.998 to 1.000. These checks support stability within this indicator menu, rather than proving that development is one-dimensional.
 
-![Figure 3](DSAI5102_Group16_Report_V2_images/image3.png)
+![Figure 3](../results/figures/structure.png)
 
 Figure 3. Variance explained by the leading components and the largest positive and negative first-component loadings. Signs indicate association with the fitted index, not whether an indicator is desirable.
 
 For the second question, the selected penalty is 12, retaining 9 indicators and producing a ranking correlation of 0.992 with the full index. The selected indicators are gross domestic product per capita, gross national income per capita at purchasing power parity, Life expectancy, Under-5 mortality, Maternal mortality, Secondary enrolment, Energy use per capita, Internet users, Fixed broadband. This is a candidate compression of the chosen 28-variable reference. A high correlation can coexist with meaningful rank changes among neighbouring economies and says nothing about information absent from that reference.
 
-![Figure 4](DSAI5102_Group16_Report_V2_images/image4.png)
+![Figure 4](../results/figures/selection.png)
 
 Figure 4. Number of retained indicators and ranking fidelity along the sparse-estimation penalty path. The dashed line marks the declared 0.99 criterion; the marked candidate is selected without income labels.
 
@@ -103,7 +103,7 @@ Table 1. Pooled held-out predictions for 198 economies on the same five outer fo
 
 On the main split, the fixed nine-indicator and within-fold sparse forests both reach 0.856 macro-F1 to three decimal places, against 0.844 for the full forest. Both shortlists use the same split and forest size, with the selection difference described in Section 3. The nested three-variable screen reaches 0.820 under its own feature-selection rule. These scores show how the tested procedures performed at the evaluated input sizes. For logistic regression, the fixed list scores 0.809, compared with 0.773 for the full menu and 0.758 for within-fold selection.
 
-![Figure 5](DSAI5102_Group16_Report_V2_images/image5.png)
+![Figure 5](../results/figures/confusion.png)
 
 Figure 5. Confusion matrices for held-out random-forest predictions using all indicators and training-fold sparse selection. Each cell shows the number of economies and its percentage within the recorded income class. Each economy contributes one prediction to each matrix; the reduced supports contain 17–18 indicators.
 
@@ -123,7 +123,7 @@ Table 2. Candidate K-means partitions in the two-component display. Stability va
 
 For the third question, the silhouette criterion selects 2 groups, containing 77 and 121 economies. The three-group partition has slightly higher bootstrap agreement (adjusted Rand index of 0.948 versus 0.938), while the two-group partition has the higher silhouette (0.533 versus 0.434). The two criteria measure different properties of the fitted partition (Hubert & Arabie, 1985; Rousseeuw, 1987). The grouping describes regions of the projected data rather than naturally discrete development stages. In particular, the display contains only 58.7% of the variation, so apparent separation can conceal differences on omitted directions. Group profiles can guide which original indicators to inspect; they do not establish policy prescriptions.
 
-![Figure 6](DSAI5102_Group16_Report_V2_images/image6.png)
+![Figure 6](../results/figures/groups.png)
 
 Figure 6. Economies in the first two component directions, coloured by the silhouette-selected K-means partition. The first component is oriented towards higher income; the second component has an arbitrary sign.
 
@@ -131,7 +131,7 @@ The first group combines below-average income, connectivity and life expectancy 
 
 Across the two non-overlapping windows, 196 economies are shared and their ranking correlation is 0.986. On this common comparison set, the largest positive changes are China (+28 places), Georgia (+25 places), Qatar (+22 places); the largest negative changes include Jamaica (-24 places), Libya (-24 places), Venezuela, República Bolivariana de (-40 places). A positive number means a higher relative position in the later window. These are descriptive changes in rank, not causal estimates or proof of absolute improvement.
 
-![Figure 7](DSAI5102_Group16_Report_V2_images/image7.png)
+![Figure 7](../results/figures/rank_changes.png)
 
 Figure 7. Rank changes for the three largest gains and three largest losses among the 196 economies shared by both time windows. Blue markers show 2005–2009 and orange markers show 2015–2019; signed labels give earlier rank minus later rank. These deliberately selected extremes do not represent the typical economy.
 
