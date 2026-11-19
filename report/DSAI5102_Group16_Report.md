@@ -28,7 +28,9 @@ The preparation order follows the intended unit of analysis. We first apply log(
 At this stage, 198 of the 5,544 economy–indicator cells are missing (3.6%). For the descriptive analysis, each variable is clipped at its first and ninety-ninth percentiles across economy means, scaled using its observed mean and standard deviation, and filled using five-nearest-neighbour imputation. Scaling before the neighbour search prevents variables with large numerical units from dominating the distance. A final standardisation gives each completed variable unit variance. These choices reduce scale effects; they do not eliminate uncertainty from missing or potentially non-random observations.
 
 ![Figure 1. Missingness for the 14 indicators with the highest pre-filter missingness, before and after the economy-year coverage filter, using the official 2005–2022 panel. Percentages concern annual observations before imputation, not the aggregated country matrix.](../results/figures/missingness.png)
+
 Figure 1. Missingness for the 14 indicators with the highest pre-filter missingness, before and after the economy-year coverage filter, using the official 2005–2022 panel. Percentages concern annual observations before imputation, not the aggregated country matrix.
+
 Figure 1 shows why preparation is necessary before modelling. Reporting completeness differs across indicators, so excluding the least complete economy-years reduces missingness but does not remove it. The graph describes the retained sample's coverage; it cannot establish why observations are missing or show that the missingness mechanism is random. The later imputation step therefore remains a modelling assumption.
 
 The classification analysis relearns clipping thresholds, scaling and imputation using training economies only. Held-out economies are transformed using those fitted operations. For a selected subset, the classifier's preprocessing is fitted again using only the retained inputs, so its held-out predictions do not borrow information from discarded variables. Separating preparation from evaluation is necessary because even unsupervised preprocessing can transmit information from test observations into a fitted procedure (scikit-learn developers, n.d.).
@@ -39,7 +41,9 @@ The classification analysis relearns clipping thresholds, scaling and imputation
 Figure 2 sets out how the research questions determine the analysis. The descriptive ranking and grouping paths use the prepared reference profiles, while the classification path splits economies before learning preprocessing and selection. Keeping these paths distinct prevents an in-sample description from being presented as held-out predictive evidence.
 
 ![Figure 2. Analysis workflow linking preparation to ranking, classification and profile comparison. Time-window indices are refitted separately; all learned prediction steps are confined to the relevant training partition.](../results/figures/workflow.png)
+
 Figure 2. Analysis workflow linking preparation to ranking, classification and profile comparison. Time-window indices are refitted separately; all learned prediction steps are confined to the relevant training partition.
+
 To answer the first question, we fit principal component analysis to the completed standardised matrix. The first direction maximises the variance of a linear projection subject to a unit-length loading vector. Equivalently, it is the leading eigenvector of the sample covariance matrix. This connects the analysis to linear algebra and constrained optimisation. The index for an economy is its standardised indicator vector projected onto that direction; we orient the sign so that the loading on gross domestic product per capita is positive. The method discovers covariance structure, rather than choosing normative welfare weights (Jolliffe & Cadima, 2016).
 
 We report the first component's variance share and assess whether the ordering is sensitive to indicator removal and resampling economies. Each leave-one-indicator-out analysis refits the component and compares its ranking with the full index using Spearman correlation. Two hundred bootstrap resamples refit the component on the completed standardised profiles. Their variance shares give a percentile interval, and their loading vectors are applied to the reference profiles to assess ranking stability. Because this bootstrap holds the initial preprocessing fixed, its uncertainty is conditional on the prepared matrix; it does not propagate every source of measurement or imputation uncertainty.
@@ -66,11 +70,15 @@ Finally, we rebuild the index separately for 2005–2009 and 2015–2019, applyi
 For the first research question, the first component explains 50.1% of total standardised variation and the first two explain 58.7%. The first direction is therefore prominent, but substantial variation remains outside it. Its bootstrap percentile interval is 46.6% to 53.7%. The minimum ranking correlation after deleting one indicator is 0.999; correlations from the conditional bootstrap range from 0.998 to 1.000. These checks support stability within this indicator menu, rather than proving that development is one-dimensional.
 
 ![Figure 3. Variance explained by the leading components and the largest positive and negative first-component loadings. Signs indicate association with the fitted index, not whether an indicator is desirable.](../results/figures/structure.png)
+
 Figure 3. Variance explained by the leading components and the largest positive and negative first-component loadings. Signs indicate association with the fitted index, not whether an indicator is desirable.
+
 For the second question, the selected penalty is 12, retaining 9 indicators and producing a ranking correlation of 0.992 with the full index. The selected indicators are gross domestic product per capita, gross national income per capita at purchasing power parity, Life expectancy, Under-5 mortality, Maternal mortality, Secondary enrolment, Energy use per capita, Internet users, Fixed broadband. This is a candidate compression of the chosen 28-variable reference. A high correlation can coexist with meaningful rank changes among neighbouring economies and says nothing about information absent from that reference.
 
 ![Figure 4. Number of retained indicators and ranking fidelity along the sparse-estimation penalty path. The dashed line marks the declared 0.99 criterion; the marked candidate is selected without income labels.](../results/figures/selection.png)
+
 Figure 4. Number of retained indicators and ranking fidelity along the sparse-estimation penalty path. The dashed line marks the declared 0.99 criterion; the marked candidate is selected without income labels.
+
 | Procedure | Accuracy | Balanced accuracy | Macro F1 |
 |---|---|---|---|
 | All indicators with random forest | 0.859 | 0.833 | 0.844 |
@@ -79,11 +87,15 @@ Figure 4. Number of retained indicators and ranking fidelity along the sparse-es
 | Sparse selection with logistic regression | 0.778 | 0.754 | 0.758 |
 | Nested three-variable selection | 0.843 | 0.813 | 0.820 |
 | Random forest without income variables | 0.828 | 0.811 | 0.823 |
+
 Table 1. Pooled held-out predictions for 198 economies under the same five outer folds. Preparation is fitted within training data; selected lists are re-estimated rather than fixed using the full sample.
+
 The full random forest achieves macro-averaged F1 of 0.844, compared with 0.856 for the sparse-selection procedure. The signed difference, reduced minus full, is +0.013. Training-fold sparse supports contain 18, 18, 18, 18, 17 indicators. Thus the classification estimate does not validate one fixed 9-variable list. It assesses whether a rule that selects a shorter list can retain useful predictive information.
 
 ![Figure 5. Confusion matrices for held-out random-forest predictions using all indicators and training-fold sparse selection. Each cell shows the number of economies and its percentage within the recorded income class. Each economy contributes one prediction to each matrix; the reduced supports contain 17–18 indicators.](../results/figures/confusion.png)
+
 Figure 5. Confusion matrices for held-out random-forest predictions using all indicators and training-fold sparse selection. Each cell shows the number of economies and its percentage within the recorded income class. Each economy contributes one prediction to each matrix; the reduced supports contain 17–18 indicators.
+
 Figure 5 shows that errors occur between adjacent income categories. Both procedures correctly classify 62 of 68 high-income economies and 37 of 47 lower-middle-income economies. The sparse-selection procedure identifies 20 of 25 low-income economies, compared with 18 for the full model, while correctly classified upper-middle-income economies decrease from 53 to 52 out of 58. Thus the slightly higher macro-averaged score reflects a change in the distribution of errors rather than uniform improvement across classes. Any apparent improvement concerns this shared held-out split and the fold-specific selection procedure, rather than a guarantee that the fixed nine-indicator descriptive list predicts equally well. These matrices support the second research question by showing where classification information is retained and where errors remain.
 
 The nested three-variable procedure gives balanced accuracy 0.813 and macro-averaged F1 0.820. This result concerns a deliberately severe input restriction, not a discovered optimal input count. Removing both income variables gives random-forest macro-averaged F1 0.823. The comparison shows how sensitive the classification is to income-related inputs; it cannot turn an administrative income label into a comprehensive measure of social or environmental development.
@@ -95,17 +107,23 @@ The nested three-variable procedure gives balanced accuracy 0.813 and macro-aver
 | 4 | 0.433 | 0.831 |
 | 5 | 0.379 | 0.683 |
 | 6 | 0.370 | 0.593 |
+
 Table 2. Candidate K-means partitions in the two-component display. Stability values are means across 200 resampled fits with the projection fixed.
+
 For the third question, the silhouette criterion selects 2 groups, containing 77, 121 economies. The grouping describes regions of the projected data rather than naturally discrete development stages. In particular, the display contains only 58.7% of the variation, so apparent separation can conceal differences on omitted directions. Group profiles can guide which original indicators to inspect; they do not establish policy prescriptions.
 
 ![Figure 6. Economies in the first two component directions, coloured by the silhouette-selected K-means partition. The first component is oriented towards higher income; the second component has an arbitrary sign.](../results/figures/groups.png)
+
 Figure 6. Economies in the first two component directions, coloured by the silhouette-selected K-means partition. The first component is oriented towards higher income; the second component has an arbitrary sign.
+
 The first group combines below-average income, connectivity and life expectancy with above-average child and maternal mortality; the second shows the opposite broad pattern. These differences explain why the partition largely follows the leading development gradient. They support using the original indicator profiles to describe contrasting conditions, but the labels remain descriptive and should not be read as fixed stages that all economies must pass through.
 
 Across the two non-overlapping windows, 196 economies are shared and their ranking correlation is 0.986. On this common comparison set, the largest positive changes are China (+28 places), Georgia (+25 places), Qatar (+22 places); the largest negative changes include Jamaica (-24 places), Libya (-24 places), Venezuela, República Bolivariana de (-40 places). A positive number means a higher relative position in the later window. These are descriptive changes in rank, not causal estimates or proof of absolute improvement.
 
 ![Figure 7. Rank changes for the three largest gains and three largest losses among the 196 economies shared by both time windows. Blue markers show 2005–2009 and orange markers show 2015–2019; signed labels give earlier rank minus later rank. These deliberately selected extremes do not represent the typical economy.](../results/figures/rank_changes.png)
+
 Figure 7. Rank changes for the three largest gains and three largest losses among the 196 economies shared by both time windows. Blue markers show 2005–2009 and orange markers show 2015–2019; signed labels give earlier rank minus later rank. These deliberately selected extremes do not represent the typical economy.
+
 Figure 7 complements the high cross-window ranking correlation by showing that an overall stable ordering can contain substantial individual movements. Both markers use ranks recomputed on the same 196 economies, so changes do not arise merely from adding or removing comparison economies. The figure addresses the change component of the third research question, while leaving the causes of those movements untested.
 
 
@@ -188,7 +206,9 @@ The following menu defines the input variables used in this study. Variable code
 | Fixed broadband | IT.NET.BBND.P2 | Yes |
 | Cereal yield | AG.YLD.CREL.KG | Yes |
 | Undernourishment | SN.ITK.DEFC.ZS | No |
+
 Table A1. The 28 selected official development series. Definitions and units follow the accompanying World Development Indicators series metadata.
+
 
 ## Statement of Individual Contribution
 
@@ -196,9 +216,10 @@ The three authors contributed equally. The work ran in four streams, and every a
 
 | Member | Student ID | Primary responsibility | Contribution |
 |---|---|---|---|
-| Chen Wanchuan | 26108204G | Problem framing; index construction and stability analysis; Sections 1–2 and 6 | 33.3% |
-| Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 3–4 | 33.3% |
-| Yuen Lok Yan | — | Classification, archetypes and dynamics; robustness checks; Sections 5 and 7; figure and table production | 33.3% |
+| Chen Wanchuan | 26108204G | Problem framing; index construction and stability analysis | 33.3% |
+| Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures | 33.3% |
+| Yuen Lok Yan | — | Classification, archetypes and dynamics; robustness checks; figure and table production | 33.3% |
+
 
 We confirm that all three authors reviewed the complete analysis, re-ran the pipeline end to end on the released code, and checked every reported number against the artefacts in `results/`. Drafting of code and text was assisted by an AI coding tool; all outputs were verified against the released artefacts by the authors, who take full responsibility for the content.
 
