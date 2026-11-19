@@ -8,7 +8,7 @@ This study asks whether a smaller set of development indicators can preserve cou
 
 ## 1 Introduction and research questions
 
-Development monitoring combines measures of income, health, education, infrastructure and environmental conditions. These variables describe different aspects of an economy, but some also move together. Collecting a longer list can therefore add detail without changing an economy's broad position. Conversely, a short list may remove information needed to distinguish economies with similar incomes. Guidance on composite indicators stresses that selection, normalisation, weighting and sensitivity analysis must be justified together; a stable numerical index is not automatically a valid measure of development (OECD et al., 2008).
+Development monitoring combines measures of income, health, education, infrastructure and environmental conditions. These variables describe different aspects of an economy, but some also move together. Collecting a longer list can therefore add detail without changing an economy's broad position. Conversely, a short list may remove information needed to distinguish economies with similar incomes. Guidance on composite indicators stresses that selection, normalisation, weighting and sensitivity analysis must be justified together; a stable numerical index is not automatically a valid measure of development (OECD et al., 2008). Index construction therefore involves choices that are not purely statistical: the menu, the weights and the aggregation rule all embed judgements, and a composite can move from description towards advocacy (Ravallion, 2012; Saltelli, 2007).
 
 Our research question develops from the course themes of exploratory analysis, dimension reduction, regularisation, supervised learning and unsupervised learning. Dimension reduction suggests asking whether correlated indicators share a common direction. Regularisation suggests testing whether that direction can be represented using fewer inputs. Classification provides a separate test of whether the retained information helps distinguish known categories, while clustering asks whether economies have different profiles beyond a single ordering. These connections motivate the analysis; we do not treat the use of more algorithms as a research objective.
 
@@ -19,13 +19,13 @@ The study's contribution is an integrated comparison of these three tasks on one
 
 ## 2 Data and preparation
 
-The source is the World Bank's World Development Indicators bulk CSV archive supplied for this revision (World Bank, 2026). Its files are dated 16 November 2026; the download date is 19 November 2026. We examine 28 indicators spanning the economy, human development, urbanisation and energy, environment, digital connectivity, and agriculture and food. Appendix A lists the retained variables in readable form. These are a chosen subset of the database, not an exhaustive definition of development.
+The source is the World Bank's World Development Indicators bulk CSV archive supplied for this revision (World Bank, 2026). Its files are dated 16 November 2026; the download date is 19 November 2026. We examine 28 indicators spanning the economy, human development, urbanisation and energy, environment, digital connectivity, and agriculture and food. Appendix A lists the retained variables in readable form. These are a chosen subset of the database, not an exhaustive definition of development; the archive publishes roughly 1,500 series (World Bank, 2026), so the menu used here covers about 2% of what is available.
 
-Regional aggregates are excluded using the archive's economy metadata, while economies and territories with a non-empty region remain eligible. Restricting the annual observations to 2005–2022 gives 3,906 candidate economy-years. We exclude observations with fewer than 60% of the 28 indicators recorded, leaving 3,517 economy-years. We then require at least 60% indicator coverage in each economy's aggregated profile, giving 198 economies. These filters limit dependence on imputation but can reduce representation of economies with weaker reporting systems. A territory is an economy-level reporting unit here, not necessarily an independent country.
+Regional aggregates are excluded using the archive's economy metadata, while economies and territories with a non-empty region remain eligible. Restricting the annual observations to 2005–2022 gives 3,906 candidate economy-years. We exclude observations with fewer than 60% of the 28 indicators recorded, leaving 3,517 economy-years. We then require at least 60% indicator coverage in each economy's aggregated profile, giving 198 economies. These filters limit dependence on imputation but can reduce representation of economies with weaker reporting systems (Serajuddin et al., 2015). A territory is an economy-level reporting unit here, not necessarily an independent country.
 
 The preparation order follows the intended unit of analysis. We first apply log(1 + x) to the positive magnitude series identified in Appendix A, reducing the influence of long right tails. We then average each transformed indicator over the available years for each economy. Averaging reduces year-specific fluctuations and avoids treating repeated observations of the same economy as independent training examples. It also changes the question: the main analysis concerns average profiles over 2005–2022, rather than a country's current situation or an annual forecast.
 
-At this stage, 198 of the 5,544 economy–indicator cells are missing (3.6%). For the descriptive analysis, each variable is clipped at its first and ninety-ninth percentiles across economy means, scaled using its observed mean and standard deviation, and filled using five-nearest-neighbour imputation. Scaling before the neighbour search prevents variables with large numerical units from dominating the distance. A final standardisation gives each completed variable unit variance. These choices reduce scale effects; they do not eliminate uncertainty from missing or potentially non-random observations.
+At this stage, 198 of the 5,544 economy–indicator cells are missing (3.6%). For the descriptive analysis, each variable is clipped at its first and ninety-ninth percentiles across economy means, scaled using its observed mean and standard deviation, and filled using five-nearest-neighbour imputation (Troyanskaya et al., 2001). Scaling before the neighbour search prevents variables with large numerical units from dominating the distance. A final standardisation gives each completed variable unit variance. These choices reduce scale effects; they do not eliminate uncertainty from missing or potentially non-random observations.
 
 ![Figure 1. Missingness for the 14 indicators with the highest pre-filter missingness, before and after the economy-year coverage filter, using the official 2005–2022 panel. Percentages concern annual observations before imputation, not the aggregated country matrix.](../results/figures/missingness.png)
 
@@ -148,7 +148,7 @@ The first research question receives a qualified positive answer: a prominent di
 
 For the second question, 9 indicators on the evaluated regularisation path reproduce the full-sample ranking at correlation 0.992. The training-fold selection procedure achieves macro-averaged F1 0.856, against 0.844 for the full random forest. This supports investigating a shorter dashboard for the specified tasks; it does not prove a minimum input set or statistical equivalence.
 
-For the third question, the data support a 2-group descriptive partition in the two-component display and a cross-window ranking correlation of 0.986. Group profiles and relative movements complement the ordering, while remaining sensitive to representation and preparation. Taken together, the findings show why indicator reduction should be evaluated through explicit research questions: fewer inputs may preserve a broad ranking, but neither ranking fidelity nor income classification alone establishes complete or policy-ready measurement of development.
+For the third question, the data support a 2-group descriptive partition in the two-component display and a cross-window ranking correlation of 0.986. Group profiles and relative movements complement the ordering, while remaining sensitive to representation and preparation. Taken together, the findings show why indicator reduction should be evaluated through explicit research questions: fewer inputs may preserve a broad ranking, but neither ranking fidelity nor income classification alone establishes complete or policy-ready measurement of development. The number of indicators an office reports is ultimately a governance choice about what to monitor, and that choice is better defended by explicit fidelity and prediction criteria than by the appeal of a single number (Ravallion, 2012; Saltelli, 2007).
 
 
 ## References
@@ -159,9 +159,17 @@ Jolliffe, I. T., & Cadima, J. (2016). Principal component analysis: A review and
 
 OECD, European Union, & European Commission Joint Research Centre. (2008). *Handbook on constructing composite indicators: Methodology and user guide*. OECD Publishing. https://doi.org/10.1787/9789264043466-en
 
+Ravallion, M. (2012). Mashup indices of development. *The World Bank Research Observer, 27*(1), 1–32. https://doi.org/10.1093/wbro/lkr009
+
 Rousseeuw, P. J. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. *Journal of Computational and Applied Mathematics, 20*, 53–65. https://doi.org/10.1016/0377-0427(87)90125-7
 
+Saltelli, A. (2007). Composite indicators between analysis and advocacy. *Social Indicators Research, 81*(1), 65–77. https://doi.org/10.1007/s11205-006-0024-9
+
 scikit-learn developers. (n.d.). *User guide*. scikit-learn. Retrieved November 19, 2026, from https://scikit-learn.org/stable/user_guide.html
+
+Serajuddin, U., Uematsu, H., Wieser, C., Yoshida, N., & Dabalen, A. (2015). *Data deprivation: Another deprivation to end* (Policy Research Working Paper No. 7252). World Bank. https://doi.org/10.1596/1813-9450-7252
+
+Troyanskaya, O., Cantor, M., Sherlock, G., Brown, P., Hastie, T., Tibshirani, R., Botstein, D., & Altman, R. B. (2001). Missing value estimation methods for DNA microarrays. *Bioinformatics, 17*(6), 520–525. https://doi.org/10.1093/bioinformatics/17.6.520
 
 Varma, S., & Simon, R. (2006). Bias in error estimation when using cross-validation for model selection. *BMC Bioinformatics, 7*, Article 91. https://doi.org/10.1186/1471-2105-7-91
 
@@ -219,6 +227,7 @@ The three authors contributed equally. The work ran in four streams, and every a
 | Chen Wanchuan | 26108204G | Problem framing; index construction and stability analysis; Sections 1, 3 and 6 | 33.3% |
 | Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 2–3 | 33.3% |
 | Yuen Lok Yan | 26002016g | Classification, archetypes and dynamics; robustness checks; figure and table production; Sections 4–5 | 33.3% |
+
 
 
 We confirm that all three authors reviewed the complete analysis, re-ran the pipeline end to end on the released code, and checked every reported number against the artefacts in `results/`. Drafting of code and text was assisted by an AI coding tool; all outputs were verified against the released artefacts by the authors, who take full responsibility for the content.
