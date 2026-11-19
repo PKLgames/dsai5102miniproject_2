@@ -1,0 +1,12 @@
+{
+  "held_out_prediction_rows": 198,
+  "prediction_scores_recomputed": true,
+  "matrix_shape": [
+    198,
+    28
+  ],
+  "finite_matrix": true,
+  "metadata_source": "Uploaded official WDICountry.csv",
+  "source_archive_date": "2026-11-16",
+  "download_date": "2026-11-19"
+}

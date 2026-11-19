@@ -1,0 +1,64 @@
+{
+  "labels": [
+    "High income",
+    "Upper middle income",
+    "Lower middle income",
+    "Low income"
+  ],
+  "counts": {
+    "full_forest": [
+      [
+        62,
+        6,
+        0,
+        0
+      ],
+      [
+        2,
+        53,
+        3,
+        0
+      ],
+      [
+        0,
+        8,
+        37,
+        2
+      ],
+      [
+        0,
+        0,
+        7,
+        18
+      ]
+    ],
+    "sparse_forest": [
+      [
+        62,
+        6,
+        0,
+        0
+      ],
+      [
+        2,
+        52,
+        4,
+        0
+      ],
+      [
+        0,
+        8,
+        37,
+        2
+      ],
+      [
+        0,
+        0,
+        5,
+        20
+      ]
+    ]
+  },
+  "n": 198,
+  "normalisation": "within each recorded class"
+}

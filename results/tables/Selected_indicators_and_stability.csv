@@ -1,0 +1,29 @@
+indicator,selected_on_full_sample,bootstrap_selection_frequency
+GDP per capita,True,0.875
+GNI per capita PPP,True,0.885
+GDP growth,False,0.0
+Trade openness,False,0.0
+Unemployment,False,0.0
+FDI inflow,False,0.0
+Life expectancy,True,0.8
+Under-5 mortality,True,0.88
+Maternal mortality,True,0.82
+Secondary enrolment,True,0.565
+Tertiary enrolment,False,0.195
+Health spending,False,0.0
+Measles immunisation,False,0.005
+Urbanisation,False,0.0
+Energy use per capita,True,0.455
+Electricity access,False,0.355
+Renewable energy share,False,0.015
+Renewable electricity,False,0.0
+CO2 emissions per capita,False,0.41
+PM2.5 exposure,False,0.0
+Forest cover,False,0.0
+Water withdrawal,False,0.0
+Agricultural land,False,0.0
+Internet users,True,0.92
+Mobile subscriptions,False,0.055
+Fixed broadband,True,0.875
+Cereal yield,False,0.0
+Undernourishment,False,0.085

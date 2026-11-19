@@ -1,0 +1,29 @@
+Indicator,Official series code,Log transform
+GDP per capita,NY.GDP.PCAP.CD,Yes
+GNI per capita PPP,NY.GNP.PCAP.PP.CD,Yes
+GDP growth,NY.GDP.MKTP.KD.ZG,No
+Trade openness,NE.TRD.GNFS.ZS,No
+Unemployment,SL.UEM.TOTL.ZS,No
+FDI inflow,BX.KLT.DINV.WD.GD.ZS,No
+Life expectancy,SP.DYN.LE00.IN,No
+Under-5 mortality,SH.DYN.MORT,Yes
+Maternal mortality,SH.STA.MMRT,Yes
+Secondary enrolment,SE.SEC.ENRR,No
+Tertiary enrolment,SE.TER.ENRR,No
+Health spending,SH.XPD.CHEX.GD.ZS,No
+Measles immunisation,SH.IMM.MEAS,No
+Urbanisation,SP.URB.TOTL.IN.ZS,No
+Energy use per capita,EG.USE.PCAP.KG.OE,Yes
+Electricity access,EG.ELC.ACCS.ZS,No
+Renewable energy share,EG.FEC.RNEW.ZS,No
+Renewable electricity,EG.ELC.RNEW.ZS,No
+CO2 emissions per capita,EN.GHG.CO2.PC.CE.AR5,Yes
+PM2.5 exposure,EN.ATM.PM25.MC.M3,Yes
+Forest cover,AG.LND.FRST.ZS,No
+Water withdrawal,ER.H2O.FWTL.ZS,Yes
+Agricultural land,AG.LND.AGRI.ZS,No
+Internet users,IT.NET.USER.ZS,No
+Mobile subscriptions,IT.CEL.SETS.P2,Yes
+Fixed broadband,IT.NET.BBND.P2,Yes
+Cereal yield,AG.YLD.CREL.KG,Yes
+Undernourishment,SN.ITK.DEFC.ZS,No
