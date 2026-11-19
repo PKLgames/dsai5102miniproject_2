@@ -216,9 +216,9 @@ The three authors contributed equally. The work ran in four streams, and every a
 
 | Member | Student ID | Primary responsibility | Contribution |
 |---|---|---|---|
-| Chen Wanchuan | 26108204G | Problem framing; index construction and stability analysis | 33.3% |
-| Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures | 33.3% |
-| Yuen Lok Yan | — | Classification, archetypes and dynamics; robustness checks; figure and table production | 33.3% |
+| Chen Wanchuan | 26108204G | Problem framing; index construction and stability analysis; Sections 1, 3 and 6 | 33.3% |
+| Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 2–3 | 33.3% |
+| Yuen Lok Yan | 26002016g | Classification, archetypes and dynamics; robustness checks; figure and table production; Sections 4–5 | 33.3% |
 
 
 We confirm that all three authors reviewed the complete analysis, re-ran the pipeline end to end on the released code, and checked every reported number against the artefacts in `results/`. Drafting of code and text was assisted by an AI coding tool; all outputs were verified against the released artefacts by the authors, who take full responsibility for the content.
