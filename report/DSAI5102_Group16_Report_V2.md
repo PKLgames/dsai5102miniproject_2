@@ -242,12 +242,14 @@ Table A1. The 28 selected official development series. Definitions and units fol
 
 The three authors contributed equally. The work ran in four streams, and every author took part in all four: (i) problem framing and literature, (ii) data construction and code, (iii) experiments and robustness checks, (iv) writing, figures and review. The table records the primary owner of each stream; the percentage is the share of total effort.
 
-| **Member**    | **Student ID** | **Primary responsibility**                                                                            | **Contribution** |
-|---------------|----------------|-------------------------------------------------------------------------------------------------------|------------------|
-| Chen Wanchuan | 26108204g      | Problem framing; index construction and stability analysis; Sections 1, 3 and 6                       | 33.3%            |
-| Lu Yuqing     | 26079015g      | Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 2–3           | 33.3%            |
-| Yuen Lok Yan  | 26002016g      | Classification, archetypes and dynamics; robustness checks; figure and table production; Sections 4–5 | 33.3%            |
+| Member | Student ID | Primary responsibility | Contribution |
+|---|---|---|---|
+| Chen Wanchuan | 26108204g | Problem framing; index construction and stability analysis; Sections 1, 3 and 6 | 33.3% |
+| Lu Yuqing | 26079015g | Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 2–3 | 33.3% |
+| Yuen Lok Yan | 26002016g | Classification, archetypes and dynamics; robustness checks; figure and table production; Sections 4–5 | 33.3% |
 
-An AI coding tool assisted in drafting code and text. The authors take responsibility for the submitted analysis and report.
 
-Declaration. The analysis uses public data from the World Bank World Development Indicators bulk CSV archive (World Bank, 2026). The project files include the extracted indicator panel and economy metadata, the analysis scripts and the saved results.
+
+We confirm that all three authors reviewed the complete analysis, re-ran the pipeline end to end on the released code, and checked every reported number against the artefacts in `results/`. Drafting of code and text was assisted by an AI coding tool; all outputs were verified against the released artefacts by the authors, who take full responsibility for the content.
+
+Declaration. The data are public (World Bank WDI, CC BY 4.0) and were retrieved through the official API. No proprietary or personal data were used. The code, the intermediate artefacts and the exact commands to regenerate every table and figure accompany this submission.
