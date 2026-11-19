@@ -1,13 +1,6 @@
-# Analysis pipeline (src/01 … src/07, src/10) — Python 3.10+
-numpy==2.2.6
-pandas==2.3.3
-scipy==1.15.3
-scikit-learn==1.7.2
-matplotlib==3.10.9
-
-# Documents: markdown -> PDF report, PPTX deck, previews
-pypandoc>=1.15        # needs a pandoc binary on PATH
-weasyprint==70.0
-python-pptx==1.0.2
-pypdfium2==5.15.2
-pillow==13.0.0
+numpy==2.3.5
+pandas==2.2.3
+scipy==1.17.0
+scikit-learn==1.8.0
+matplotlib==3.10.8
+python-docx==1.2.0
