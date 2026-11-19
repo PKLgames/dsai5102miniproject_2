@@ -9,11 +9,11 @@
     "Low income": 25
   },
   "evr": [
-    0.5008666929946446,
-    0.08619774842253561,
-    0.06006887574368107,
-    0.05577250325632199,
-    0.045751451447107
+    0.5008666929946445,
+    0.08619774842253544,
+    0.06006887574368106,
+    0.055772503256322076,
+    0.045751451447107135
   ],
   "selected": [
     "GDP per capita",
@@ -98,36 +98,36 @@
   "loadings": {
     "GDP per capita": 0.2506654361433785,
     "GNI per capita PPP": 0.25503317996634567,
-    "GDP growth": -0.09381323823250651,
+    "GDP growth": -0.09381323823250656,
     "Trade openness": 0.10491320595727581,
-    "Unemployment": 0.017672656506071426,
+    "Unemployment": 0.017672656506071423,
     "FDI inflow": 0.058770185155292004,
-    "Life expectancy": 0.2448170159321766,
+    "Life expectancy": 0.24481701593217658,
     "Under-5 mortality": -0.2524545200435735,
     "Maternal mortality": -0.2449577887106463,
-    "Secondary enrolment": 0.239568548439387,
+    "Secondary enrolment": 0.23956854843938688,
     "Tertiary enrolment": 0.22209000595543202,
-    "Health spending": 0.09488064034335596,
-    "Measles immunisation": 0.17924641782677422,
+    "Health spending": 0.09488064034335601,
+    "Measles immunisation": 0.1792464178267742,
     "Urbanisation": 0.1993610512500402,
     "Energy use per capita": 0.23085227643639394,
-    "Electricity access": 0.23310272166884544,
+    "Electricity access": 0.2331027216688454,
     "Renewable energy share": -0.2002991123965151,
     "Renewable electricity": -0.06735382357564162,
     "CO2 emissions per capita": 0.2296493764828872,
-    "PM2.5 exposure": -0.11167696028254902,
-    "Forest cover": -0.00788550782371331,
-    "Water withdrawal": 0.07301299584851226,
-    "Agricultural land": -0.06711976101736133,
+    "PM2.5 exposure": -0.11167696028254905,
+    "Forest cover": -0.007885507823713294,
+    "Water withdrawal": 0.07301299584851223,
+    "Agricultural land": -0.06711976101736135,
     "Internet users": 0.2520798283859688,
     "Mobile subscriptions": 0.21028355907747862,
     "Fixed broadband": 0.25012171926423815,
-    "Cereal yield": 0.18377532330695975,
+    "Cereal yield": 0.18377532330695973,
     "Undernourishment": -0.21399105806454435
   },
   "bootstrap_ci": [
-    0.4660530274398049,
-    0.5373452990877006
+    0.466053027439805,
+    0.5373452990877002
   ],
   "bootstrap_rho_range": [
     0.9981773194537524,
@@ -194,6 +194,16 @@
       "macro_f1": 0.8229418856913403,
       "balanced_accuracy": 0.8112668853308015,
       "accuracy": 0.8282828282828283
+    },
+    "fixed_nine_forest": {
+      "macro_f1": 0.8560872555340641,
+      "balanced_accuracy": 0.8442067670795391,
+      "accuracy": 0.8636363636363636
+    },
+    "fixed_nine_logistic": {
+      "macro_f1": 0.8087729363796667,
+      "balanced_accuracy": 0.7999991368520996,
+      "accuracy": 0.8232323232323232
     }
   },
   "folds": [
@@ -383,7 +393,7 @@
   "clusters": [
     {
       "k": 2,
-      "silhouette": 0.5334757411625737,
+      "silhouette": 0.5334757411625738,
       "stability": 0.9377747428842889
     },
     {
@@ -393,7 +403,7 @@
     },
     {
       "k": 4,
-      "silhouette": 0.43301922138944526,
+      "silhouette": 0.4330192213894454,
       "stability": 0.8312844566919086
     },
     {
@@ -622,6 +632,5 @@
     "LBY": -24.0,
     "VEN": -40.0
   },
-  "input_zip_sha256": "abbe23673c4e33387e8a7bd02fe31ca26fff841377fa5ce855c18094b1ec52af",
-  "selected_input_preprocessing": "refitted on selected columns within each training fold"
+  "input_zip_sha256": "abbe23673c4e33387e8a7bd02fe31ca26fff841377fa5ce855c18094b1ec52af"
 }

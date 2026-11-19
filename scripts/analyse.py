@@ -57,11 +57,15 @@ res['bootstrap_ci']=np.quantile(boot,[.025,.975]).tolist();res['bootstrap_rho_ra
 res['leave_one_rho_min']=float(min(abs(spearmanr(score,pc(np.delete(Z,j,axis=1))[1]).statistic) for j in range(28)))
 print('bootstrap done',flush=True)
 y=meta['Income Group'].to_numpy();classified=pd.notna(y)&(y!='Not classified');Xc=X[classified];yc=y[classified]
-outer=StratifiedKFold(5,shuffle=True,random_state=7);preds={k:np.empty(len(yc),dtype=object) for k in ['full_forest','sparse_forest','full_logistic','sparse_logistic','three_forest','without_income']};folds=[];selections=[]
+outer=StratifiedKFold(5,shuffle=True,random_state=7);preds={k:np.empty(len(yc),dtype=object) for k in ['full_forest','sparse_forest','full_logistic','sparse_logistic','three_forest','without_income','fixed_nine_forest','fixed_nine_logistic']};folds=[];selections=[]
 def forest():return RandomForestClassifier(n_estimators=200,random_state=0,n_jobs=1)
 nonincome=[j for j in range(28) if j not in [0,1]]
 for fold,(tr,te) in enumerate(outer.split(Xc,yc)):
  prep=Prep().fit(Xc[tr]);zt=prep.transform(Xc[tr]);ze=prep.transform(Xc[te]);ix=select(zt)
+ # The full-sample nine-indicator candidate is evaluated unchanged in every fold:
+ # same outer split, same within-fold preprocessing, same forest size.
+ pp=Prep().fit(Xc[tr][:,chosen]);model=forest().fit(pp.transform(Xc[tr][:,chosen]),yc[tr]);preds['fixed_nine_forest'][te]=model.predict(pp.transform(Xc[te][:,chosen]))
+ pp=Prep().fit(Xc[tr][:,chosen]);lg=LogisticRegression(max_iter=3000).fit(pp.transform(Xc[tr][:,chosen]),yc[tr]);preds['fixed_nine_logistic'][te]=lg.predict(pp.transform(Xc[te][:,chosen]))
  row={'fold':fold,'selected_count':len(ix)}
  for key,cols,model in [('full_forest',np.arange(28),forest()),('sparse_forest',ix,forest()),('full_logistic',np.arange(28),LogisticRegression(max_iter=3000)),('sparse_logistic',ix,LogisticRegression(max_iter=3000))]:
   pp=Prep().fit(Xc[tr][:,cols]);model.fit(pp.transform(Xc[tr][:,cols]),yc[tr]);pr=model.predict(pp.transform(Xc[te][:,cols]));preds[key][te]=pr;row[key]=float(f1_score(yc[te],pr,average='macro'))
@@ -98,6 +102,9 @@ for name,years in [('early',range(2005,2010)),('late',range(2015,2020))]:
 a,b=windows['early'].align(windows['late'],join='inner');res['window_n']=len(a);res['window_rho']=float(spearmanr(a,b).statistic)
 # Ranks are recomputed over the common economies to avoid changing comparison populations.
 res['window_rho']=float(spearmanr(a.rank(),b.rank()).statistic);movers=(a.rank()-b.rank()).sort_values(ascending=False);res['movers']={i:float(j) for i,j in pd.concat([movers.head(3),movers.tail(3)]).items()}
-res['input_zip_sha256']=hashlib.sha256(Path(sys.argv[1] if len(sys.argv)>1 else '/workspace/scratch/8e9ddc941f75/upload/WDI_CSV.zip').read_bytes()).hexdigest()
+zippath=Path(sys.argv[1] if len(sys.argv)>1 else '/workspace/scratch/8e9ddc941f75/upload/WDI_CSV.zip')
+# The zip itself is not versioned; record the hash when it is available.
+prevpath=D/'analysis.json';prev=json.loads(prevpath.read_text()) if prevpath.exists() else {}
+res['input_zip_sha256']=hashlib.sha256(zippath.read_bytes()).hexdigest() if zippath.exists() else prev.get('input_zip_sha256')
 (D/'analysis.json').write_text(json.dumps(res,indent=2));print('ALL COMPLETE',flush=True)
 if __name__=='__main__':pass
