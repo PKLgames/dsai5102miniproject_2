@@ -17,7 +17,7 @@ import pypandoc
 from weasyprint import HTML
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC = ROOT / "report" / "DSAI5102_Group16_Report.md"
+SRC = ROOT / "report" / "Group16_Report.md"
 OUT = SRC.with_suffix(".pdf")
 
 INLINE = {

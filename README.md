@@ -10,9 +10,9 @@ Group 16 · Chen Wanchuan · Lu Yuqing · Yuen Lok Yan
 
 | What | File |
 |:--|:--|
-| Report, canonical source | [`report/DSAI5102_Group16_Report.md`](report/DSAI5102_Group16_Report.md) |
-| Report, PDF | [`report/DSAI5102_Group16_Report.pdf`](report/DSAI5102_Group16_Report.pdf) |
-| Slides, PDF (9 slides, 16:9) | [`slides/DSAI5102_Group16_slides.pdf`](slides/DSAI5102_Group16_slides.pdf) |
+| Report, canonical source | [`report/Group16_Report.md`](report/Group16_Report.md) |
+| Report, PDF | [`report/Group16_Report.pdf`](report/Group16_Report.pdf) |
+| Slides, PDF (9 slides, 16:9) | [`slides/Group16_slides.pdf`](slides/Group16_slides.pdf) |
 | Analysis output (every number quoted in the report) | [`results/analysis.json`](results/analysis.json) |
 | Split-seed check | [`results/repeat_splits.csv`](results/repeat_splits.csv) |
 | File-level checksums of the artefacts | [`results/file_checksums.json`](results/file_checksums.json) |
@@ -72,10 +72,10 @@ python scripts/export_tables.py
 python scripts/repeat_splits.py
 
 # 5. report PDF (needs pandoc + WeasyPrint; pandoc ships with pypandoc)
-python scripts/build_report_html.py  # -> report/DSAI5102_Group16_Report.pdf
+python scripts/build_report_html.py  # -> report/Group16_Report.pdf
 ```
 
-The builder reads `report/DSAI5102_Group16_Report.md` and is the only report path now: the Markdown is
+The builder reads `report/Group16_Report.md` and is the only report path now: the Markdown is
 the deliverable, the PDF is typeset from it. The two display equations are typeset as Unicode text, since
 WeasyPrint has no MathML support. LibreOffice is not needed.
 
