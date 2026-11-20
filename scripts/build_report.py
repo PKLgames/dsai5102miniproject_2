@@ -49,10 +49,12 @@ with tempfile.TemporaryDirectory() as temp_dir:
     section_starts = [
         paragraph for paragraph in doc.paragraphs
         if paragraph.style.name == "Heading 2"
-        and (paragraph.text == "References" or paragraph.text.startswith("Appendix A "))
+        and (paragraph.text == "References"
+             or paragraph.text.startswith("Appendix A ")
+             or paragraph.text.startswith("Statement of Individual"))
     ]
-    if len(section_starts) != 2:
-        raise ValueError("Expected References and Appendix A headings in the report.")
+    if len(section_starts) != 3:
+        raise ValueError("Expected References, Appendix A and Statement headings in the report.")
     for paragraph in section_starts:
         paragraph.paragraph_format.page_break_before = True
 

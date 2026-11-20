@@ -47,11 +47,16 @@ DISPLAY = {
 
 CSS = """
 @page { size: Letter; margin: 0.9in 0.95in 0.8in 0.95in;
+        @footnote { border-top: 0.4pt solid #999; margin-top: 8pt; padding-top: 3pt; } }
         @bottom-center { content: counter(page); font: 10pt "Nimbus Roman", serif; color: #333; } }
+::footnote-call { content: counter(footnote); font-size: 65%; vertical-align: super; }
+::footnote-marker { font-size: 65%; vertical-align: super; }
 body { font-family: "Nimbus Roman", "Times New Roman", serif; font-size: 11pt;
        line-height: 1.45; text-align: justify; hyphens: auto; }
 h1 { font-size: 15pt; text-align: center; margin: 0 0 6pt 0; line-height: 1.3; }
 h2 { font-size: 12.5pt; margin: 14pt 0 6pt 0; page-break-after: avoid; }
+h2#references, h2[id^="appendix-a"], h2[id^="statement-of"] { break-before: page; }
+fn { float: footnote; font-size: 9pt; line-height: 1.25; }
 h3 { font-size: 11pt; margin: 10pt 0 4pt 0; page-break-after: avoid; }
 p { margin: 0 0 6pt 0; text-indent: 0.3in; orphans: 2; widows: 2; }
 h1 + p, h2 + p, h3 + p, blockquote p { text-indent: 0; }
@@ -117,6 +122,16 @@ def main() -> None:
     html_body = re.sub(r"<p>(Figure\s+\d+\.)", r'<p class="caption">\1', html_body)
     html_body = re.sub(r"<p>(Table\s+[A-Z]?\d+\.)", r'<p class="caption">\1', html_body)
     html_body = re.sub(r"<para-math>(.*?)</para-math>", r'<p class="math">\1</p>', html_body, flags=re.S)
+
+    # pandoc emits end-notes; WeasyPrint can float them to the bottom of the page
+    notes = re.findall(
+        r'<li id="fn(\d+)">\s*<p>(.*?)(?:<a href="#fnref\d+"[^>]*>.*?</a>\s*)?</p>',
+        html_body, re.S)
+    for num, text in notes:
+        html_body = re.sub(
+            r'<a href="#fn%s"[^>]*><sup>\s*\d+\s*</sup></a>' % num,
+            lambda m, t=text: '<fn>' + t + '</fn>', html_body, count=1)
+    html_body = re.sub(r'<section id="footnotes".*?</section>', "", html_body, flags=re.S)
 
     refs = re.search(r'(<h2 id="references">References</h2>)(.*?)(<h2 id="appendix)', html_body, re.S)
     if refs:
