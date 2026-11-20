@@ -10,7 +10,7 @@ from docx.oxml.ns import qn
 from docx.shared import Inches, Pt, RGBColor
 
 report_dir = Path(__file__).resolve().parents[1] / "report"
-source = report_dir / "DSAI5102_Group16_Report_V4.md"
+source = report_dir / "DSAI5102_Group16_Report.md"
 title_line, _, body = source.read_text().partition("\n")
 title = title_line.removeprefix("# ")
 office = shutil.which("soffice") or shutil.which("libreoffice")
