@@ -5,20 +5,14 @@ report agree on what an "indicator" is.
 """
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
-import numpy as np
-import pandas as pd
 
 # ---------------------------------------------------------------- paths ----
 PROJECT = Path(__file__).resolve().parents[1]
-DATA_RAW = PROJECT / "data" / "raw"
-DATA_PROC = PROJECT / "data" / "processed"
 FIGS = PROJECT / "results" / "figures"
-METRICS = PROJECT / "results" / "metrics"
 TABLES = PROJECT / "results" / "tables"
-for d in (DATA_RAW, DATA_PROC, FIGS, METRICS, TABLES):
+for d in (FIGS, TABLES):
     d.mkdir(parents=True, exist_ok=True)
 
 # --------------------------------------------------------------- schema ----
@@ -89,107 +83,3 @@ INCOME_COLORS = {
 }
 DOMAIN_COLORS = dict(zip(DOMAINS, ["#0072B2", "#009E73", "#E69F00",
                                    "#56B4E9", "#CC79A7", "#D55E00"]))
-
-
-def setup_matplotlib():
-    import os
-    os.environ.setdefault("MPLCONFIGDIR", str(PROJECT / ".mplconfig"))
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
-    plt.rcParams.update({
-        "font.size": 9, "axes.titlesize": 9.5, "axes.labelsize": 9,
-        "legend.fontsize": 7.5, "xtick.labelsize": 8, "ytick.labelsize": 8,
-        "axes.spines.top": False, "axes.spines.right": False,
-        "figure.dpi": 150, "savefig.dpi": 300,
-        "pdf.fonttype": 42, "ps.fonttype": 42,
-        "savefig.bbox": "tight", "savefig.pad_inches": 0.02,
-        "axes.grid": True, "grid.alpha": 0.25, "grid.linewidth": 0.5,
-    })
-    return plt
-
-
-def save(fig, name):
-    pdf, png = FIGS / f"{name}.pdf", FIGS / f"{name}.png"
-    fig.savefig(pdf)
-    fig.savefig(png, dpi=200)
-    return pdf
-
-
-def save_json(obj, path):
-    Path(path).write_text(json.dumps(obj, indent=2, default=str))
-
-
-def load_raw_panel() -> pd.DataFrame:
-    return pd.read_csv(DATA_RAW / "wdi_panel_long.csv")
-
-
-def load_processed() -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Return (X_raw_units, Z_standardised) with a (iso3, year) MultiIndex."""
-    X = pd.read_csv(DATA_PROC / "dataset.csv", index_col=["iso3", "year"])
-    Z = pd.read_csv(DATA_PROC / "dataset_std.csv", index_col=["iso3", "year"])
-    return X, Z
-
-
-def load_countries() -> pd.DataFrame:
-    return pd.read_csv(DATA_RAW / "countries.csv").set_index("iso3")
-
-
-def load_country_meta() -> pd.DataFrame:
-    m = pd.read_csv(DATA_RAW / "countries.csv").set_index("iso3")
-    m["region"] = m["region"].str.strip()
-    m["income"] = m["income"].str.strip()
-    return m
-
-
-def income_short(s):
-    """'High income' -> 'High'; works on a Series or a single string."""
-    if hasattr(s, "str"):
-        return s.astype(str).str.replace(" income", "", regex=False)
-    return str(s).replace(" income", "")
-
-
-# ------------------------------------------------------------- tables -----
-def write_table(df: pd.DataFrame, stem: str, caption: str, label: str,
-                align: str | None = None, note: str = "",
-                float_fmt: str = "%.3f") -> None:
-    """Write the same table as LaTeX (results/tables/<stem>.tex) and CSV."""
-    df.to_csv(TABLES / f"{stem}.csv", index=False)
-    cols = list(df.columns)
-    if align is None:
-        align = "l" + "r" * (len(cols) - 1)
-    lines = [
-        "\\begin{table}[t]",
-        "\\centering",
-        "\\caption{%s}" % caption,
-        "\\label{%s}" % label,
-        "\\small",
-        "\\begin{tabular}{%s}" % align,
-        "\\toprule",
-        " & ".join(f"\\textbf{{{c}}}" for c in cols) + " \\\\",
-        "\\midrule",
-    ]
-    for row in df.itertuples(index=False):
-        cells = []
-        for v in row:
-            if isinstance(v, (int, np.integer)):
-                cells.append(f"{v}")
-            elif isinstance(v, (float, np.floating)):
-                cells.append(float_fmt % v)
-            else:
-                cells.append(str(v))
-        lines.append(" & ".join(cells) + " \\\\")
-    lines += ["\\bottomrule", "\\end{tabular}"]
-    if note:
-        lines += ["\\vspace{2pt}\\parbox{0.92\\linewidth}{\\footnotesize %s}" % note]
-    lines += ["\\end{table}"]
-    (TABLES / f"{stem}.tex").write_text("\n".join(lines) + "\n")
-
-
-def x_escape(df: pd.DataFrame) -> pd.DataFrame:
-    """Escape underscores for LaTeX cells (kept minimal: only our own strings)."""
-    out = df.copy()
-    for c in out.columns:
-        if out[c].dtype == object:
-            out[c] = out[c].astype(str).str.replace("_", r"\_", regex=False)
-    return out

@@ -1,158 +1,70 @@
+"""Build the submission PDF from the canonical Markdown report."""
 from pathlib import Path
-import json,re
-import pandas as pd,numpy as np
+import shutil
+import subprocess
+import tempfile
+
 from docx import Document
-from docx.shared import Inches,Pt,RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-R=Path(__file__).resolve().parents[1];s=json.loads((R/'results/analysis.json').read_text());O=R/'report';O.mkdir(exist_ok=True)
-S=[]
-def h(x):S.append(('h',x))
-def p(x):S.append(('p',x))
-def t(head,rows,note):S.append(('t',(head,rows,note)))
-def f(name,cap):S.append(('f',(name,cap)))
-metadata=pd.read_csv(R/'results/country_metadata.csv',index_col=0)
-def meta_name(i):return str(metadata.loc[i,'Short Name'])
-a=s['classification'];n=s['n'];k=len(s['selected']);ev=s['evr'][0]*100;ev2=sum(s['evr'][:2])*100
-h('Abstract')
-p(f"This study asks whether a smaller set of development indicators can preserve country rankings, retain income-group classification performance and reveal useful differences between country profiles. We analyse 28 World Development Indicators for {n} economies, using country averages over 2005–2022 from the official archive downloaded on 19 November 2026. Principal component analysis provides a descriptive reference index, sparse component estimation selects a shorter indicator set, and training-fold evaluation compares classification procedures. The first component explains {ev:.1f}% of standardised variance. A {k}-indicator subset achieves a Spearman rank correlation of {s['rho']:.3f} with the full index. Held-out macro-averaged F1 is {a['fixed_nine_forest']['macro_f1']:.3f} for the fixed nine-indicator list: the same score as the procedure that reselects 17–18 indicators inside each training fold, and above the {a['full_forest']['macro_f1']:.3f} of the full random forest, while a nested three-indicator screen reaches {a['three_forest']['macro_f1']:.3f}. On this split the same short list serves both the descriptive ranking and the administrative classification, and the limit on compression appears below nine inputs rather than between the two tasks; Section 5 shows that the equality with the reselected list does not hold on every split. The results support a shorter candidate dashboard for this indicator menu, while leaving its external validity and policy usefulness to further evaluation.")
-h('1 Introduction and research questions')
-p("Development monitoring combines measures of income, health, education, infrastructure and environmental conditions. These variables describe different aspects of an economy, but some also move together. Collecting a longer list can therefore add detail without changing an economy's broad position. Conversely, a short list may remove information needed to distinguish economies with similar incomes. Guidance on composite indicators stresses that selection, normalisation, weighting and sensitivity analysis must be justified together; a stable numerical index is not automatically a valid measure of development (OECD et al., 2008). Index construction therefore involves choices that are not purely statistical: the menu, the weights and the aggregation rule all embed judgements, and a composite can move from description towards advocacy (Ravallion, 2012; Saltelli, 2007).")
-p("Our research question develops from the course themes of exploratory analysis, dimension reduction, regularisation, supervised learning and unsupervised learning. Dimension reduction suggests asking whether correlated indicators share a common direction. Regularisation suggests testing whether that direction can be represented using fewer inputs. Classification provides a separate test of whether the retained information helps distinguish known categories, while clustering asks whether economies have different profiles beyond a single ordering. These connections motivate the analysis; we do not treat the use of more algorithms as a research objective.")
-p("The overarching question is how far the indicator set can be reduced without losing the information required for a specified task. We address three linked questions. First, does the selected development data contain a dominant and stable ranking direction? Second, can a shorter indicator set preserve that ranking and retain income-group classification performance when selection is evaluated on held-out economies? Third, do multivariate groupings and changes in rank provide information that a single ordering conceals?")
-p("The study's contribution is an integrated comparison of these three tasks on one documented dataset. We define success separately for compression, classification and country profiles. A high correlation with an internally constructed index measures fidelity to that index. It does not establish that the index is an external ground truth, that the selected subset is globally minimal, or that a particular policy intervention would improve development.")
-h('2 Data and preparation')
-p(f"The source is the World Bank's World Development Indicators bulk CSV archive supplied for this revision (World Bank, 2026). Its files are dated 16 November 2026; the download date is 19 November 2026. We examine 28 indicators spanning the economy, human development, urbanisation and energy, environment, digital connectivity, and agriculture and food. Appendix A lists the retained variables in readable form. These are a chosen subset of the database, not an exhaustive definition of development; the archive publishes roughly 1,500 series (World Bank, 2026), so the menu used here covers about 2% of what is available.")
-p(f"Regional aggregates are excluded using the archive's economy metadata, while economies and territories with a non-empty region remain eligible. Restricting the annual observations to 2005–2022 gives 3,906 candidate economy-years. We exclude observations with fewer than 60% of the 28 indicators recorded, leaving {s['rows']:,} economy-years. We then require at least 60% indicator coverage in each economy's aggregated profile, giving {n} economies. These filters limit dependence on imputation but can reduce representation of economies with weaker reporting systems (Serajuddin et al., 2015). A territory is an economy-level reporting unit here, not necessarily an independent country.")
-p("The preparation order follows the intended unit of analysis. We first apply log(1 + x) to the positive magnitude series identified in Appendix A, reducing the influence of long right tails. We then average each transformed indicator over the available years for each economy. Averaging reduces year-specific fluctuations and avoids treating repeated observations of the same economy as independent training examples. It also changes the question: the main analysis concerns average profiles over 2005–2022, rather than a country's current situation or an annual forecast.")
-p(f"At this stage, {s['missing']} of the {n*28:,} economy–indicator cells are missing ({100*s['missing']/(n*28):.1f}%). For the descriptive analysis, each variable is clipped at its first and ninety-ninth percentiles across economy means, scaled using its observed mean and standard deviation, and filled using five-nearest-neighbour imputation (Troyanskaya et al., 2001). Scaling before the neighbour search prevents variables with large numerical units from dominating the distance. A final standardisation gives each completed variable unit variance. These choices reduce scale effects; they do not eliminate uncertainty from missing or potentially non-random observations.")
-f('missingness.png','Figure 1. Missingness for the 14 indicators with the highest pre-filter missingness, before and after the economy-year coverage filter, using the official 2005–2022 panel. Percentages concern annual observations before imputation, not the aggregated country matrix.')
-p("Figure 1 shows why preparation is necessary before modelling. Reporting completeness differs across indicators, so excluding the least complete economy-years reduces missingness but does not remove it. The graph describes the retained sample's coverage; it cannot establish why observations are missing or show that the missingness mechanism is random. The later imputation step therefore remains a modelling assumption.")
-p("The classification analysis relearns clipping thresholds, scaling and imputation using training economies only. Held-out economies are transformed using those fitted operations. For a selected subset, the classifier's preprocessing is fitted again using only the retained inputs, so its held-out predictions do not borrow information from discarded variables. Separating preparation from evaluation is necessary because even unsupervised preprocessing can transmit information from test observations into a fitted procedure (scikit-learn developers, n.d.).")
-h('3 Methods and their purposes')
-p("Figure 2 sets out how the research questions determine the analysis. The descriptive ranking and grouping paths use the prepared reference profiles, while the classification path splits economies before learning preprocessing and selection. Keeping these paths distinct prevents an in-sample description from being presented as held-out predictive evidence.")
-f('workflow.png','Figure 2. Analysis workflow linking preparation to ranking, classification and profile comparison. Time-window indices are refitted separately; all learned prediction steps are confined to the relevant training partition.')
-p("To answer the first question, we fit principal component analysis to the completed standardised matrix. The first direction maximises the variance of a linear projection subject to a unit-length loading vector. Equivalently, it is the leading eigenvector of the sample covariance matrix. This connects the analysis to linear algebra and constrained optimisation. The index for an economy is its standardised indicator vector projected onto that direction; we orient the sign so that the loading on gross domestic product per capita is positive. The method discovers covariance structure, rather than choosing normative welfare weights (Jolliffe & Cadima, 2016).")
-p("We report the first component's variance share and assess whether the ordering is sensitive to indicator removal and resampling economies. Each leave-one-indicator-out analysis refits the component and compares its ranking with the full index using Spearman correlation. Two hundred bootstrap resamples refit the component on the completed standardised profiles. Their variance shares give a percentile interval, and their loading vectors are applied to the reference profiles to assess ranking stability. Because this bootstrap holds the initial preprocessing fixed, its uncertainty is conditional on the prepared matrix; it does not propagate every source of measurement or imputation uncertainty.")
-p("For the second question, we use the scikit-learn single-component sparse estimator, which penalises absolute loading values while seeking a low-rank reconstruction. The penalty encourages zero loadings and supplies a connection to regularisation and the fit–complexity trade-off (Zou et al., 2006; scikit-learn developers, n.d.). We evaluate thirteen penalty values from 0.05 to 12. For each non-empty support, an ordinary first principal component is refitted using only the retained variables. Its absolute Spearman correlation with the full index measures ranking fidelity. This avoids attributing a two-direction variance measure to the support of just one direction.")
-p("Our declared selection rule chooses the smallest support on this penalty grid whose ranking correlation reaches 0.99; ties favour the larger penalty. The threshold is a practical fidelity criterion, not a significance test. This selects a candidate from the fitted regularisation path, not a proven minimum over all possible variable subsets. Two hundred bootstrap fits at the selected full-sample penalty describe how often individual variables survive. The reduced index and its fidelity are descriptive, in-sample summaries; the separate classification evaluation addresses held-out performance.")
-p("Income-group classification tests a different property. The target is the Income Group field accompanying the downloaded economy metadata, rather than an assumed historical fiscal-year classification. The World Bank bases income categories on gross national income per capita converted using the Atlas method (World Bank, n.d.). Income-related inputs therefore make this a related administrative classification task, not an independent validation of overall development. We also remove both income-per-capita indicators in a sensitivity analysis to assess reliance on that relationship.")
-p("We compare random forests with logistic regression. A random forest averages decision trees built with randomisation, allowing nonlinear relationships and interactions; logistic regression provides a simpler linear decision-boundary comparison (Breiman, 2001). Forests use 200 trees, and logistic regression uses its default regularisation with a maximum of 3,000 iterations. These are fixed specifications, not models tuned to the outer test results. We use a shared five-fold stratified split, with each economy held out once. All preparation and sparse-support selection are repeated inside the training fold. Consequently, the reduced classification result evaluates a selection procedure whose variables and size can differ between folds.")
-p("One comparison isolates the selection objective rather than the evaluation protocol. The support chosen on the full sample is treated as a frozen "+str(k)+"-indicator list and carried through the same five outer folds, with preparation refitted on the training economies of each fold and the same 200-tree specification. Its score can therefore be compared directly with the score of a procedure that reselects its support inside every fold, because the two differ in how the columns are chosen rather than in how they are assessed.")
-p("A three-indicator supervised screen provides an additional comparison under a fixed input budget. Within each outer training set, greedy forward selection adds three variables using balanced accuracy in three inner stratified folds and a 60-tree forest. Every inner fold relearns preprocessing. A 200-tree forest is then fitted to the chosen variables in the outer training set and evaluated on the outer held-out economies. The nested design separates feature choice from assessment, following the principle described by Varma and Simon (2006). It estimates the performance of selecting three variables, not the performance of a single universally fixed list.")
-p("We pool the held-out predictions and report accuracy, balanced accuracy and macro-averaged F1. Accuracy weights economies equally; balanced accuracy averages class recalls; macro-averaged F1 gives each income class equal weight when combining precision and recall. The latter two help prevent the largest class from dominating interpretation. A small difference between two pooled scores is descriptive and is not evidence of statistical equivalence. We do not present the five folds as independent experimental replications.")
-p("For the third question, we apply K-means to the first two principal component scores. This minimises within-group squared distances and makes the grouping visible in a low-dimensional display. We compare two to six groups and choose the number with the largest silhouette score, which contrasts within-group cohesion with distance to the nearest alternative group (Rousseeuw, 1987). Two hundred bootstrap refits provide an additional stability diagnostic using the adjusted Rand index against the reference partition, evaluated on all reference economies. The component projection is held fixed, so this diagnostic concerns partition stability in that display, not the stability of the entire analytical pipeline.")
-p("Finally, we rebuild the index separately for 2005–2009 and 2015–2019, applying the same coverage and preparation rules within each window. We compare ranks only among economies available in both windows and recompute the ranks on that common population. This distinguishes changing relative position from a changing comparison set. The two indices have separately estimated directions and scales, so their numerical score differences are not treated as a common-unit measure of development progress.")
-h('4 Results')
-p(f"For the first research question, the first component explains {ev:.1f}% of total standardised variation and the first two explain {ev2:.1f}%. The first direction is therefore prominent, but substantial variation remains outside it. Its bootstrap percentile interval is {s['bootstrap_ci'][0]*100:.1f}% to {s['bootstrap_ci'][1]*100:.1f}%. The minimum ranking correlation after deleting one indicator is {s['leave_one_rho_min']:.3f}; correlations from the conditional bootstrap range from {s['bootstrap_rho_range'][0]:.3f} to {s['bootstrap_rho_range'][1]:.3f}. These checks support stability within this indicator menu, rather than proving that development is one-dimensional.")
-f('structure.png','Figure 3. Variance explained by the leading components and the largest positive and negative first-component loadings. Signs indicate association with the fitted index, not whether an indicator is desirable.')
-p(f"For the second question, the selected penalty is {s['alpha']}, retaining {k} indicators and producing a ranking correlation of {s['rho']:.3f} with the full index. The selected indicators are "+', '.join(s['selected'])+". This is a candidate compression of the chosen 28-variable reference. A high correlation can coexist with meaningful rank changes among neighbouring economies and says nothing about information absent from that reference.")
-f('selection.png','Figure 4. Number of retained indicators and ranking fidelity along the sparse-estimation penalty path. The dashed line marks the declared 0.99 criterion; the marked candidate is selected without income labels.')
-_rows=[('full_forest','All 28 indicators, random forest'),('fixed_nine_forest','Fixed nine-indicator list, random forest'),('sparse_forest','Within-fold sparse selection, random forest'),('three_forest','Nested three-variable selection, random forest'),('without_income','Random forest without income variables'),('full_logistic','All 28 indicators, logistic regression'),('fixed_nine_logistic','Fixed nine-indicator list, logistic regression'),('sparse_logistic','Within-fold sparse selection, logistic regression')]
-t(['Procedure','Accuracy','Balanced accuracy','Macro F1'],[[lab]+[f"{a[key][m]:.3f}" for m in ['accuracy','balanced_accuracy','macro_f1']] for key,lab in _rows],f"Table 1. Pooled held-out predictions for {s['classified_n']} economies on the same five outer folds. Preparation is refitted inside each training fold for every row. The two fixed rows use the {k} indicators selected once on the full sample and change their columns in no fold; the two within-fold rows reselect a sparse support inside each training fold, where the supports contain 17–18 indicators.")
-p(f"The fixed {k}-indicator list achieves macro-averaged F1 of {a['fixed_nine_forest']['macro_f1']:.3f}. The procedure that reselects its support inside each training fold achieves {a['sparse_forest']['macro_f1']:.3f}, so the two scores agree to three decimal places, and the full menu achieves {a['full_forest']['macro_f1']:.3f}. The two short-list rows share the split, the preparation rules and the forest size, so the comparison isolates one change: frozen columns against columns re-estimated in every fold. Because the fixed list loses nothing measurable, the larger within-fold supports of 17–18 indicators are not evidence that classification needs a longer menu than ranking does; they describe what the sparse estimator retains at the fidelity threshold. The nested three-variable screen reaches {a['three_forest']['macro_f1']:.3f}, so the loss of information appears below {k} inputs. The logistic regressions follow the same pattern: the fixed list ({a['fixed_nine_logistic']['macro_f1']:.3f}) exceeds both the full menu ({a['full_logistic']['macro_f1']:.3f}) and the within-fold selection ({a['sparse_logistic']['macro_f1']:.3f}).")
-f('confusion.png','Figure 5. Confusion matrices for held-out random-forest predictions using all indicators and training-fold sparse selection. Each cell shows the number of economies and its percentage within the recorded income class. Each economy contributes one prediction to each matrix; the reduced supports contain 17–18 indicators.')
-p("Figure 5 shows that errors occur between adjacent income categories. Both procedures correctly classify 62 of 68 high-income economies and 37 of 47 lower-middle-income economies. The sparse-selection procedure identifies 20 of 25 low-income economies, compared with 18 for the full model, while correctly classified upper-middle-income economies decrease from 53 to 52 out of 58. Thus the slightly higher macro-averaged score reflects a change in the distribution of errors rather than uniform improvement across classes. The fixed nine-indicator list reaches the same pooled score as the sparse-selection row, so the difference from the full menu concerns where errors fall rather than how many remain. These matrices support the second research question by showing where classification information is retained and where errors remain.")
-p(f"The nested three-variable procedure gives balanced accuracy {a['three_forest']['balanced_accuracy']:.3f} and macro-averaged F1 {a['three_forest']['macro_f1']:.3f}. This result concerns a deliberately severe input restriction, not a discovered optimal input count. Removing both income variables gives random-forest macro-averaged F1 {a['without_income']['macro_f1']:.3f}. The comparison shows how sensitive the classification is to income-related inputs; it cannot turn an administrative income label into a comprehensive measure of social or environmental development.")
-t(['Groups','Silhouette','Bootstrap adjusted Rand index'],[[str(c['k']),f"{c['silhouette']:.3f}",f"{c['stability']:.3f}"] for c in s['clusters']], 'Table 2. Candidate K-means partitions in the two-component display. Stability values are means across 200 resampled fits with the projection fixed.')
-p(f"For the third question, the silhouette criterion selects {s['cluster_k']} groups, containing "+', '.join(str(x) for x in s['cluster_sizes'])+f" economies. The grouping describes regions of the projected data rather than naturally discrete development stages. In particular, the display contains only {ev2:.1f}% of the variation, so apparent separation can conceal differences on omitted directions. Group profiles can guide which original indicators to inspect; they do not establish policy prescriptions.")
-f('groups.png','Figure 6. Economies in the first two component directions, coloured by the silhouette-selected K-means partition. The first component is oriented towards higher income; the second component has an arbitrary sign.')
-p("The first group combines below-average income, connectivity and life expectancy with above-average child and maternal mortality; the second shows the opposite broad pattern. These differences explain why the partition largely follows the leading development gradient. They support using the original indicator profiles to describe contrasting conditions, but the labels remain descriptive and should not be read as fixed stages that all economies must pass through.")
-p(f"Across the two non-overlapping windows, {s['window_n']} economies are shared and their ranking correlation is {s['window_rho']:.3f}. On this common comparison set, the largest positive changes are "+', '.join(meta_name(i)+f" ({int(j):+d} places)" for i,j in list(s['movers'].items())[:3])+"; the largest negative changes include "+', '.join(meta_name(i)+f" ({int(j):+d} places)" for i,j in list(s['movers'].items())[3:])+". A positive number means a higher relative position in the later window. These are descriptive changes in rank, not causal estimates or proof of absolute improvement.")
-f('rank_changes.png','Figure 7. Rank changes for the three largest gains and three largest losses among the 196 economies shared by both time windows. Blue markers show 2005–2009 and orange markers show 2015–2019; signed labels give earlier rank minus later rank. These deliberately selected extremes do not represent the typical economy.')
-p("Figure 7 complements the high cross-window ranking correlation by showing that an overall stable ordering can contain substantial individual movements. Both markers use ranks recomputed on the same 196 economies, so changes do not arise merely from adding or removing comparison economies. The figure addresses the change component of the third research question, while leaving the causes of those movements untested.")
-h('5 Discussion and limitations')
-p("The results answer different questions that should remain separate. A principal component summarises covariance; sparse estimation seeks a simpler representation; classification assesses held-out category prediction; clustering describes similarities. The distinction connects directly to the course's treatment of unsupervised and supervised objectives. Optimising variance retention does not necessarily preserve a decision boundary, and finding a stable partition does not make its groups suitable policy targets. In this data set the two objectives nevertheless agreed: the frozen nine-indicator shortlist reached the same macro-averaged F1 as the procedure that re-estimates a 17–18 indicator support inside each fold. That agreement is an empirical result for this menu and this sample, not a property of principal components; where the ranking direction and the class boundary diverge, the same comparison can come out the other way. These differences explain why an indicator list should be judged against the task it is intended to perform.")
-p("The practical implication is to treat the selected subset as a candidate reporting layer above the full data. A shorter display can make a broad ordering easier to communicate, while the remaining variables support examination of health, education, environmental conditions and other dimensions. The study has not measured collection costs, field usability or the consequences of replacing a real monitoring system. Therefore it does not justify instructing agencies to stop collecting the discarded variables.")
-p("Several limits constrain the conclusion. The 28-variable menu is selected by judgement and excludes governance, inequality and other important dimensions. Its variables are not independent measures: some reflect overlapping economic processes and shared statistical systems. A dominant direction can partly represent this overlap. In addition, the index is oriented towards income, and a loading's sign is an empirical association rather than a welfare judgement. For example, an unfavourable sign on renewable energy share would not show that renewable energy reduces development.")
-p("Country averages combine observations from unequal numbers of years. Missingness may be concentrated among economies with weaker statistical capacity, and nearest-neighbour filling can smooth genuine differences. Log transformations and clipping also alter the geometry used by the methods. The conditional bootstrap does not capture those choices, and the panel's common reporting source can produce correlated measurement error. Results should consequently be interpreted as properties of a documented data preparation, not as an uncertainty-free global ranking.")
-p("The classification sample is small and uses one seeded five-fold partition. Repeating the whole comparison over ten split seeds replaces the equality of Section 4 with a mean deficit of 0.012 macro-averaged F1 for the fixed nine-indicator list against the reselected 17–18 indicator support, ranging from zero to 0.039, so that equality is a property of the reported split rather than of the list. No independent external dataset has been used. The downloaded income groups describe the archive's classification snapshot, whereas the predictors average 2005–2022; the task measures association with that snapshot and is not a time-respecting forecast. Selecting a convenient input count after reviewing outer-fold scores would require another assessment stage. We therefore retain the predeclared three-variable restriction and fidelity threshold without claiming they are universally optimal.")
-p("Further work should first repeat the complete procedure across alternative imputation and scaling rules, since the split-seed check above covers only the partitioning. It should then test the candidate subset on another period, measure the consequences of excluding income-related variables from index construction, and assess group stability while refitting the projection. These checks would address generalisation and construct validity before adding more complex predictive models. The current study demonstrates the workflow and its trade-offs, not a validated replacement for established development measures.")
-h('6 Conclusion')
-p(f"The first research question receives a qualified positive answer: a prominent direction explains {ev:.1f}% of the selected data's variation and produces a ranking that is stable under the reported conditional checks. The remaining variation prevents us from equating that direction with the whole of development.")
-p(f"For the second question, {k} indicators on the evaluated regularisation path reproduce the full-sample ranking at correlation {s['rho']:.3f}. On the reported split the frozen nine-indicator list achieves macro-averaged F1 {a['fixed_nine_forest']['macro_f1']:.3f}: the same score as a procedure that reselects its support inside every training fold, and above the {a['full_forest']['macro_f1']:.3f} of the full random forest, while the three-indicator screen falls to {a['three_forest']['macro_f1']:.3f}. The limit on compression therefore sits below nine inputs rather than between the ranking and classification tasks. This supports investigating a shorter dashboard for the specified tasks; it does not prove a minimum input set or statistical equivalence.")
-p(f"For the third question, the data support a {s['cluster_k']}-group descriptive partition in the two-component display and a cross-window ranking correlation of {s['window_rho']:.3f}. Group profiles and relative movements complement the ordering, while remaining sensitive to representation and preparation. Taken together, the findings show why indicator reduction should be evaluated through explicit research questions: fewer inputs may preserve a broad ranking, but neither ranking fidelity nor income classification alone establishes complete or policy-ready measurement of development. The number of indicators an office reports is ultimately a governance choice about what to monitor, and that choice is better defended by explicit fidelity and prediction criteria than by the appeal of a single number (Ravallion, 2012; Saltelli, 2007).")
-h('References')
-refs=[
-'Breiman, L. (2001). Random forests. *Machine Learning, 45*, 5–32. https://doi.org/10.1023/A:1010933404324',
-'Jolliffe, I. T., & Cadima, J. (2016). Principal component analysis: A review and recent developments. *Philosophical Transactions of the Royal Society A: Mathematical, Physical and Engineering Sciences, 374*(2065), Article 20150202. https://doi.org/10.1098/rsta.2015.0202',
-'OECD, European Union, & European Commission Joint Research Centre. (2008). *Handbook on constructing composite indicators: Methodology and user guide*. OECD Publishing. https://doi.org/10.1787/9789264043466-en',
-'Ravallion, M. (2012). Mashup indices of development. *The World Bank Research Observer, 27*(1), 1–32. https://doi.org/10.1093/wbro/lkr009',
-'Rousseeuw, P. J. (1987). Silhouettes: A graphical aid to the interpretation and validation of cluster analysis. *Journal of Computational and Applied Mathematics, 20*, 53–65. https://doi.org/10.1016/0377-0427(87)90125-7',
-'Saltelli, A. (2007). Composite indicators between analysis and advocacy. *Social Indicators Research, 81*(1), 65–77. https://doi.org/10.1007/s11205-006-0024-9',
-'scikit-learn developers. (n.d.). *User guide*. scikit-learn. Retrieved November 19, 2026, from https://scikit-learn.org/stable/user_guide.html',
-'Serajuddin, U., Uematsu, H., Wieser, C., Yoshida, N., & Dabalen, A. (2015). *Data deprivation: Another deprivation to end* (Policy Research Working Paper No. 7252). World Bank. https://doi.org/10.1596/1813-9450-7252',
-'Troyanskaya, O., Cantor, M., Sherlock, G., Brown, P., Hastie, T., Tibshirani, R., Botstein, D., & Altman, R. B. (2001). Missing value estimation methods for DNA microarrays. *Bioinformatics, 17*(6), 520–525. https://doi.org/10.1093/bioinformatics/17.6.520',
-'Varma, S., & Simon, R. (2006). Bias in error estimation when using cross-validation for model selection. *BMC Bioinformatics, 7*, Article 91. https://doi.org/10.1186/1471-2105-7-91',
-'World Bank. (n.d.). *How does the World Bank classify countries?* World Bank Data Help Desk. Retrieved November 19, 2026, from https://datahelpdesk.worldbank.org/knowledgebase/articles/378834-how-does-the-world-bank-classify-countries',
-'World Bank. (2026). *World development indicators* [Data set]. Retrieved November 19, 2026, from https://datatopics.worldbank.org/world-development-indicators/',
-'Zou, H., Hastie, T., & Tibshirani, R. (2006). Sparse principal component analysis. *Journal of Computational and Graphical Statistics, 15*(2), 265–286. https://doi.org/10.1198/106186006X113430']
-for x in refs:S.append(('r',x))
-h('Appendix A Indicator definitions and transformations')
-p("The following menu defines the input variables used in this study. Variable codes identify the official series for verification and are confined to this appendix. Positive magnitude variables marked Yes are transformed with log(1 + x) before averaging; the other variables remain on their recorded scale until clipping and standardisation. A high component loading does not establish that an indicator is normatively desirable.")
-import schema as C
-t(['Indicator','Official series code','Log transform'],[[x[1],x[0],'Yes' if x[4] else 'No'] for x in C.INDICATORS],'Table A1. The 28 selected official development series. Definitions and units follow the accompanying World Development Indicators series metadata.')
-h('Statement of Individual Contribution')
-p("The three authors contributed equally. The work ran in four streams, and every author took part in all four: (i) problem framing and literature, (ii) data construction and code, (iii) experiments and robustness checks, (iv) writing, figures and review. The table records the primary owner of each stream; the percentage is the share of total effort.")
-t(['Member','Student ID','Primary responsibility','Contribution'],[
- ['Chen Wanchuan','26108204G','Problem framing; index construction and stability analysis; Sections 1, 3 and 6','33.3%'],
- ['Lu Yuqing','26079015g','Data pipeline, imputation and coverage analysis; the two shortlist procedures; Sections 2–3','33.3%'],
- ['Yuen Lok Yan','26002016g','Classification, archetypes and dynamics; robustness checks; figure and table production; Sections 4–5','33.3%']], '')
-p("We confirm that all three authors reviewed the complete analysis, re-ran the pipeline end to end on the released code, and checked every reported number against the artefacts in `results/`. Drafting of code and text was assisted by an AI coding tool; all outputs were verified against the released artefacts by the authors, who take full responsibility for the content.")
-p("Declaration. The data are public (World Bank WDI, CC BY 4.0) and were retrieved through the official API. No proprietary or personal data were used. The code, the intermediate artefacts and the exact commands to regenerate every table and figure accompany this submission.")
-expanded={'GDP per capita':'gross domestic product per capita','GNI per capita PPP':'gross national income per capita at purchasing power parity','GDP growth':'gross domestic product growth','FDI inflow':'foreign direct investment inflow','CO2 emissions per capita':'carbon dioxide emissions per capita','PM2.5 exposure':'fine particulate matter exposure'}
-for idx,(kind,val) in enumerate(S):
- if kind=='p':
-  for old,new in expanded.items():val=val.replace(old,new)
-  S[idx]=(kind,val)
-# Document formatting follows the user's established report preferences.
-d=Document();sec=d.sections[0];sec.top_margin=sec.bottom_margin=Inches(.75);sec.left_margin=sec.right_margin=Inches(.8)
-st=d.styles['Normal'];st.font.name='Times New Roman';st.font.size=Pt(12);pf=st.paragraph_format;pf.line_spacing=1.5;pf.first_line_indent=Inches(.25);pf.space_after=Pt(5);pf.alignment=WD_ALIGN_PARAGRAPH.JUSTIFY
-for name,size in [('Title',16),('Heading 1',14)]:
- st=d.styles[name];st.font.name='Times New Roman';st.font.size=Pt(size);st.font.italic=False;st.font.color.rgb=RGBColor(0,0,0);st.paragraph_format.first_line_indent=Inches(0)
-for st in d.styles:
- for border in list(st._element.xpath('.//w:pBdr')):border.getparent().remove(border)
-d.add_paragraph('Reducing Development Indicators While Preserving Country Rankings and Income Classification',style='Title')
-x=d.add_paragraph('DSAI5102 Principles of Data Science\nFormat 1 Data Application and Practice\nGroup16: Chen Wanchuan，Lu Yuqing，Yuen Lok Yan');x.alignment=WD_ALIGN_PARAGRAPH.CENTER;x.paragraph_format.first_line_indent=Inches(0)
-md=['# Reducing Development Indicators While Preserving Country Rankings and Income Classification','Group16: Chen Wanchuan，Lu Yuqing，Yuen Lok Yan']
-for kind,val in S:
- if kind=='h':
-  x=d.add_paragraph(val,style='Heading 1');md.append('\n## '+val+'\n')
-  if val in ['References','Appendix A Indicator definitions and transformations','Statement of Individual Contribution']:x.paragraph_format.page_break_before=True
- elif kind=='p':d.add_paragraph(val);md.append(val+'\n')
- elif kind=='r':
-  x=d.add_paragraph();x.paragraph_format.left_indent=Inches(.5);x.paragraph_format.first_line_indent=Inches(-.5);x.alignment=WD_ALIGN_PARAGRAPH.LEFT
-  for i,part in enumerate(val.split('*')):x.add_run(part).italic=bool(i%2)
-  md.append(val+'\n')
- elif kind=='f':
-  name,cap=val;x=d.add_paragraph();x.paragraph_format.first_line_indent=Inches(0);x.paragraph_format.keep_with_next=True;x.add_run().add_picture(str(R/'results/figures'/name),width=Inches(6.7));x=d.add_paragraph(cap);x.paragraph_format.first_line_indent=Inches(0)
-  for run in x.runs:run.font.size=Pt(10)
-  md.extend([f'![{cap}](../results/figures/{name})','',cap+'\n'])
- elif kind=='t':
-  heads,rows,note=val;tab=d.add_table(rows=1,cols=len(heads));tab.autofit=False
-  widths=[3.3,2.4,1] if len(heads)==3 and heads[0]=='Indicator' else ([3.5,1,1.2,1] if len(heads)==4 else [1,2.5,3.2])
-  if heads[0]=='Member':widths=[1.1,1.1,3.5,1.2]
-  for col,w in zip(tab.columns,widths):col.width=Inches(w*6.9/sum(widths))
-  for c,vv in zip(tab.rows[0].cells,heads):c.text=vv
-  for row in rows:
-   for c,vv in zip(tab.add_row().cells,row):c.text=str(vv)
-  tab.rows[0]._tr.get_or_add_trPr().append(OxmlElement('w:tblHeader'))
-  borders=OxmlElement('w:tblBorders')
-  for edge in ['top','bottom','insideH','insideV','left','right']:
-   b=OxmlElement('w:'+edge);b.set(qn('w:val'),'single');b.set(qn('w:sz'),'4');b.set(qn('w:color'),'D9D9D9');borders.append(b)
-  tab._tbl.tblPr.append(borders)
-  for ri,row in enumerate(tab.rows):
-   row._tr.get_or_add_trPr().append(OxmlElement('w:cantSplit'))
-   for cell,cellw in zip(row.cells,widths):
-    if heads[0]=='Member':cell.width=Inches(cellw*6.9/sum(widths))
-    for pp in cell.paragraphs:
-     pp.paragraph_format.first_line_indent=Inches(0);pp.paragraph_format.line_spacing=1.05 if len(rows)>10 else 1.15;pp.paragraph_format.space_after=Pt(2 if len(rows)>10 else 5);pp.alignment=WD_ALIGN_PARAGRAPH.LEFT
-     if len(rows)<10:pp.paragraph_format.keep_with_next=ri<len(tab.rows)-1
-     for run in pp.runs:run.font.size=Pt(10);run.bold=ri==0
-  x=d.add_paragraph(note);x.paragraph_format.first_line_indent=Inches(0)
-  for run in x.runs:run.font.size=Pt(10)
-  md.extend(['| '+' | '.join(heads)+' |','|'+'|'.join(['---']*len(heads))+'|']+['| '+' | '.join(map(str,row))+' |' for row in rows]+['',note+'\n'])
-foot=sec.footer.paragraphs[0];foot.alignment=WD_ALIGN_PARAGRAPH.CENTER;field=OxmlElement('w:fldSimple');field.set(qn('w:instr'),'PAGE');foot._p.append(field)
-stem='DSAI5102_Group16_Report';d.save(O/(stem+'.docx'));(O/(stem+'.md')).write_text('\n'.join(md))
-print('Report generated',len(' '.join(md).split()),'words including appendices')
+from docx.shared import Inches, Pt, RGBColor
+
+report_dir = Path(__file__).resolve().parents[1] / "report"
+source = report_dir / "DSAI5102_Group16_Report_V4.md"
+title_line, _, body = source.read_text().partition("\n")
+title = title_line.removeprefix("# ")
+office = shutil.which("soffice") or shutil.which("libreoffice")
+if office is None:
+    raise SystemExit("Install LibreOffice and add soffice to PATH.")
+
+with tempfile.TemporaryDirectory() as temp_dir:
+    working = Path(temp_dir)
+    content = working / "report.md"
+    content.write_text(body)
+    docx_path = working / source.with_suffix(".docx").name
+    subprocess.run(
+        ["pandoc", str(content), "--from=markdown+tex_math_single_backslash-smart",
+         "--metadata", f"title={title}", "-o", str(docx_path)],
+        cwd=report_dir, check=True,
+    )
+    doc = Document(docx_path)
+    for style in doc.styles:
+        style.font.name = "Liberation Serif"
+        style.font.color.rgb = RGBColor(0, 0, 0)
+        fonts = style.element.get_or_add_rPr().rFonts
+        for attribute in ("asciiTheme", "hAnsiTheme", "eastAsiaTheme", "cstheme"):
+            fonts.attrib.pop(qn(f"w:{attribute}"), None)
+    doc.styles["Normal"].font.size = Pt(11)
+    doc.styles["Body Text"].font.size = Pt(11)
+    doc.styles["Title"].font.size = Pt(19)
+    doc.styles["Title"].font.bold = True
+    for section in doc.sections:
+        section.left_margin = section.right_margin = Inches(0.85)
+        section.top_margin = section.bottom_margin = Inches(0.8)
+        footer = section.footer.paragraphs[0]
+        footer.alignment = 1
+        page = OxmlElement("w:fldSimple")
+        page.set(qn("w:instr"), "PAGE")
+        footer._p.append(page)
+    section_starts = [
+        paragraph for paragraph in doc.paragraphs
+        if paragraph.style.name == "Heading 2"
+        and (paragraph.text == "References" or paragraph.text.startswith("Appendix A "))
+    ]
+    if len(section_starts) != 2:
+        raise ValueError("Expected References and Appendix A headings in the report.")
+    for paragraph in section_starts:
+        paragraph.paragraph_format.page_break_before = True
+
+    contribution = doc.tables[-1]
+    for column, width in zip(contribution.columns, (1.25, 1.05, 3.45, 1.05)):
+        column.width = Inches(width)
+        for cell in column.cells:
+            cell.width = Inches(width)
+    doc.save(docx_path)
+    subprocess.run(
+        [office, f"-env:UserInstallation={(working / 'profile').as_uri()}",
+         "--headless", "--convert-to", "pdf", "--outdir", str(working), str(docx_path)],
+        check=True,
+    )
+    source.with_suffix(".pdf").write_bytes(docx_path.with_suffix(".pdf").read_bytes())

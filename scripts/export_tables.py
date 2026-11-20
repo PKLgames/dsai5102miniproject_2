@@ -1,12 +1,21 @@
 """Export current report tables and supporting numerical records."""
 from pathlib import Path
 import json,sys
-import numpy as np,pandas as pd
+import pandas as pd
 R=Path(__file__).resolve().parents[1];sys.path.insert(0,str(R/'scripts'));import schema as C
 s=json.loads((R/'results/analysis.json').read_text());out=R/'results/tables';out.mkdir(exist_ok=True)
-names={'full_forest':'All indicators with random forest','sparse_forest':'Sparse selection with random forest','full_logistic':'All indicators with logistic regression','sparse_logistic':'Sparse selection with logistic regression','three_forest':'Nested three-variable selection','without_income':'Random forest without income variables'}
+names = {
+    'full_forest': 'All 28 indicators, random forest',
+    'fixed_nine_forest': 'Fixed nine-indicator list, random forest',
+    'sparse_forest': 'Within-fold sparse selection, random forest',
+    'three_forest': 'Nested three-variable selection, random forest',
+    'without_income': 'Random forest without income variables',
+    'full_logistic': 'All 28 indicators, logistic regression',
+    'fixed_nine_logistic': 'Fixed nine-indicator list, logistic regression',
+    'sparse_logistic': 'Within-fold sparse selection, logistic regression',
+}
 tables={
-'Table1_classification':pd.DataFrame([{'Procedure':names[k],**v} for k,v in s['classification'].items()]),
+'Table1_classification':pd.DataFrame([{'Procedure': label, **{m: s['classification'][key][m] for m in ('accuracy', 'balanced_accuracy', 'macro_f1')}} for key, label in names.items()]),
 'Table2_cluster_comparison':pd.DataFrame(s['clusters']),
 'TableA1_indicators':pd.DataFrame([{'Indicator':v[1],'Official series code':v[0],'Log transform':'Yes' if v[4] else 'No'} for v in C.INDICATORS]),
 'Country_rankings':pd.read_csv(R/'results/rankings.csv'),
@@ -23,19 +32,14 @@ tables={
 for stem,df in tables.items():
  df.to_csv(out/(stem+'.csv'),index=False)
  def esc(value):
-  value=f'{value:.6f}' if isinstance(value,float) else str(value)
-  return value.replace('&',r'\&').replace('%',r'\%').replace('_',r'\_').replace('#',r'\#')
+  value = f'{value:.6f}' if isinstance(value, float) else str(value)
+  escapes = {'\\': r'\textbackslash{}', '&': r'\&', '%': r'\%', '_': r'\_',
+             '#': r'\#', '$': r'\$', '{': r'\{', '}': r'\}',
+             '~': r'\textasciitilde{}', '^': r'\textasciicircum{}'}
+  return ''.join(escapes.get(char, char) for char in value)
  lines=[r'\begin{tabular}{'+'l'*len(df.columns)+'}',r'\hline',' & '.join(map(esc,df.columns))+r' \\',r'\hline']
  lines += [' & '.join(map(esc,row))+r' \\' for row in df.itertuples(index=False,name=None)]
  lines += [r'\hline',r'\end{tabular}']
  (out/(stem+'.tex')).write_text('\n'.join(lines)+'\n')
-(out/'README.md').write_text('''# Current report tables
-
-Table1_classification, Table2_cluster_comparison and TableA1_indicators correspond to Tables 1, 2 and A1 in the current report. Other files support its figures and detailed numerical checks. Each table has CSV and LaTeX versions. CSVs retain numerical precision; the report rounds classification and cluster scores to three decimals.
-
-These tables replace the earlier project's table outputs. Do not restore old result tables or the old three-component robustness result: those do not describe the revised analysis. Cluster identifiers in supporting files start at zero; figure group labels start at one.
-
-The nine-variable descriptive candidate and the 17–18-variable training-fold classification subsets are different results; they must not share a single fixed-list performance claim.
-''')
-assert len(tables['Table1_classification'])==6 and len(tables['TableA1_indicators'])==28
-print('Exported',len(tables),'current tables in CSV and LaTeX.')
+assert len(tables['TableA1_indicators']) == 28
+print('Exported', len(tables), 'tables.')

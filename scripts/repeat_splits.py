@@ -3,7 +3,7 @@
 Three arms, identical inside each seed and fold:
   full      - all 28 indicators
   fixed9    - the frozen sparse support selected once on the full sample
-  reselect  - sparse support re-estimated inside the training fold (17-18)
+  reselect  - sparse support re-estimated inside the training fold
 All preprocessing is refitted on the training economies of the fold.
 """
 import os, json, time
@@ -22,7 +22,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import f1_score, balanced_accuracy_score, accuracy_score
 warnings.filterwarnings('ignore', category=RuntimeWarning)
 
-R = Path("/home/pklgames/coding/dsai5102MiniProject_2")
+R = Path(__file__).resolve().parents[1]
 D = R / 'results'
 sys.path.insert(0, str(R / 'scripts'))
 import schema as C

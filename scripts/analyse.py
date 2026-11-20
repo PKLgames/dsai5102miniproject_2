@@ -1,6 +1,6 @@
 import os
 for k in ['OPENBLAS_NUM_THREADS','OMP_NUM_THREADS','MKL_NUM_THREADS']:os.environ[k]='1'
-import sys,json,warnings,hashlib
+import json,warnings
 from pathlib import Path
 import numpy as np,pandas as pd
 from scipy.stats import spearmanr
@@ -102,9 +102,4 @@ for name,years in [('early',range(2005,2010)),('late',range(2015,2020))]:
 a,b=windows['early'].align(windows['late'],join='inner');res['window_n']=len(a);res['window_rho']=float(spearmanr(a,b).statistic)
 # Ranks are recomputed over the common economies to avoid changing comparison populations.
 res['window_rho']=float(spearmanr(a.rank(),b.rank()).statistic);movers=(a.rank()-b.rank()).sort_values(ascending=False);res['movers']={i:float(j) for i,j in pd.concat([movers.head(3),movers.tail(3)]).items()}
-zippath=Path(sys.argv[1] if len(sys.argv)>1 else '/workspace/scratch/8e9ddc941f75/upload/WDI_CSV.zip')
-# The zip itself is not versioned; record the hash when it is available.
-prevpath=D/'analysis.json';prev=json.loads(prevpath.read_text()) if prevpath.exists() else {}
-res['input_zip_sha256']=hashlib.sha256(zippath.read_bytes()).hexdigest() if zippath.exists() else prev.get('input_zip_sha256')
 (D/'analysis.json').write_text(json.dumps(res,indent=2));print('ALL COMPLETE',flush=True)
-if __name__=='__main__':pass
